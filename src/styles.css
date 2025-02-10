@@ -1,1 +1,31 @@
-/* You can add global styles to this file, and also import other style files */
+/* General Styles */
+*{ font-family: 'Montserrat', 'Space Grotesk', sans-serif; }
+
+a{ text-decoration: none; }
+a, a:visited{ color: inherit; }
+
+ul, li{ list-style: none; }
+
+h1, h2, h3, p, a, ul{ margin: 0; padding: 0; }
+
+body{ margin: 0; }
+
+header, main, footer{ padding-left: 1em; padding-right: 1em; }
+
+main{ min-height: 90vh; }
+
+/* Header */
+header{ height: 8vh; background-color: black; color: white; padding-top: 1rem; padding-bottom: 1rem; }
+
+header .navbar{ height: 100%; display: flex; justify-content: center; align-items: center; }
+
+header .navbar ul{ 
+    width: 30%; min-width: fit-content; 
+    display: inline-flex; justify-content: space-between;
+    gap: 1rem;
+
+    font-family: 'Space Grotesk';
+    text-transform: uppercase;
+    font-size: 130%;
+    font-weight: 500;
+} 

@@ -1,1 +1,15 @@
-<p>header works!</p>
+<nav class="navbar" *ngIf="uid">
+    <ul>
+        <li><a [routerLink]="['/home', uid]">
+            Home
+        </a></li>
+
+        <li><a [routerLink]="['/clients', uid]">
+            Clientes
+        </a></li>
+
+        <li><a [routerLink]="['/workouts', uid]">
+            Workouts
+        </a></li>
+    </ul>
+</nav>

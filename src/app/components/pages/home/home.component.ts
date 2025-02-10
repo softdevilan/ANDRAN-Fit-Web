@@ -11,6 +11,5 @@ import { SidebarComponent } from '../../layout/sidebar/sidebar.component';
 
 export class HomeComponent {
   constructor( firebaseServide: FirebaseService ) {}
-  
 
 }

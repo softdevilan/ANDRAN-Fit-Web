@@ -1,8 +1,7 @@
-// login.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FirebaseService } from '../../../../services/firebase.service';
+import { PseudoauthService } from '../../../../services/pseudoauth.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -20,34 +19,40 @@ export class LoginComponent implements OnInit {
   });
 
   constructor(
-    private firebaseService: FirebaseService,
+    // Usamos el pseudologin de momento
+    private firebaseService: PseudoauthService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    /* // Si ya está autenticado, redirige a home
-    this.firebaseService.isAuthenticated().subscribe(isAuthenticated => {
-      if (isAuthenticated) {
-        this.router.navigate(['/home']);
-      }
-    }); */
+
+    // Con el pseudologin, esto no va a funcionar realmente
+    if(this.firebaseService.isLoggedIn()){
+      const uid = this.firebaseService.getUID();
+      this.router.navigate(['/home', uid]);
+    }
+
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
+
+    // Si ha rellenado todos los campos y son válidos
     if (this.loginForm.valid) {
-      const email: string = this.loginForm.get('email')!.value ?? ''; // Si es null, se asigna ''
+      const email: string = this.loginForm.get('email')!.value ?? ''; 
       const password: string = this.loginForm.get('password')!.value ?? '';
-  
-      this.firebaseService.login(email, password).subscribe({
-        next: () => {
-          this.router.navigate(['/home']);
-        },
-        error: (error) => {
-          console.error('Error en el login:', error);
-          // Manejar el error aquí (por ejemplo, mostrar un mensaje al usuario)
-        }
-      });
+
+      // Hacemos el pseudologin
+      if (await this.firebaseService.login(email, password)){
+        const uid = this.firebaseService.getUID();
+
+        // Si los datos son correctos, redirigimos al home del entrenador específico
+        this.router.navigate(['/home', uid]);
+
+      } else {
+        console.error('Error en el login.');
+      }
     }
+
   }
 
   get email() { return this.loginForm.get('email'); }
