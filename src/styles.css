@@ -1,5 +1,5 @@
 /* General Styles */
-*{ font-family: 'Montserrat', 'Space Grotesk', sans-serif; }
+*{ font-family: 'Montserrat', 'Space Grotesk', sans-serif; color: white }
 
 a{ text-decoration: none; }
 a, a:visited{ color: inherit; }
@@ -10,12 +10,12 @@ h1, h2, h3, p, a, ul{ margin: 0; padding: 0; }
 
 body{ margin: 0; }
 
-header, main, footer{ padding-left: 1em; padding-right: 1em; }
+/* header, main, footer{ padding-left: 1em; padding-right: 1em; } */
 
 main{ min-height: 90vh; }
 
 /* Header */
-header{ height: 8vh; background-color: black; color: white; padding-top: 1rem; padding-bottom: 1rem; }
+header{ height: 8vh; background-color: black; color: white; padding-top: 1rem; padding-bottom: 1rem; border-bottom: solid 2px white;}
 
 header .navbar{ height: 100%; display: flex; justify-content: center; align-items: center; }
 
@@ -28,4 +28,35 @@ header .navbar ul{
     text-transform: uppercase;
     font-size: 130%;
     font-weight: 500;
-} 
+}
+
+main{ background-color: black; }
+
+/* Home page */
+#homepage{
+    min-height: 90vh;
+    width: 100%;
+    
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.sidebar-container, .home-container{ padding: 1rem; }
+
+.sidebar-container{
+    width: 25%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    background-color: black;
+
+    border-left: solid white 1px;
+}
+
+.home-container{
+    width: 100%;
+}
