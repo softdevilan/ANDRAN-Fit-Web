@@ -1,124 +1,189 @@
 <div class="register-client-form">
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="ngForm" (ngSubmit)="onSubmit()">
         <h1>Registro de cliente</h1>
-
+        <select name="assigned-trainer" id="assigned-trainer" formControlName="entrenador" class="assigned-trainer">
+            <option value="">-Sin entrenador asignado-</option>
+            <option *ngFor="let entrenador of entrenadores" value="{{ entrenador.uid }}">
+                {{ entrenador.nombre }} {{ entrenador.apellido1 }} - {{ entrenador.uid }}
+            </option>
+        </select>
         <!-- CLIENT PERSONAL INFO -->
-        <div class="client-info">
-            
-            <fieldset>               
-                <legend><h2>Datos del cliente</h2></legend>
-                
-                <h3>Información personal</h3>
+        <div class="form-section client-info">
+
+            <fieldset>
+                <legend>
+                    <h2>🧑‍💻 Datos del cliente</h2>
+                </legend>
+
+                <h3>🧑 Información personal</h3>
                 <section class="name">
                     <!-- Nombre -->
-                    <div>
-                        <label for="firstName">Nombre</label>
-                        <input type="firstname" id="name">
+                    <div class="form-group">
+                        <label for="firstName">*Nombre</label>
+                        <input type="text" id="firstName" placeholder="Juan Antonio" formControlName="nombre"
+                            [ngClass]="{ 'error': nombre?.invalid && (nombre?.dirty || nombre?.touched) }">
+
+                        <div *ngIf="nombre?.invalid && (nombre?.dirty || nombre?.touched)" class="error-message">
+                            <div *ngIf="nombre?.errors?.['required']">
+                                *El nombre es requerido
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Apellidos -->
-                    <div>
-                        <label for="surname">Apellido/s</label>
-                        <input type="surname" id="name">
+                    <div class="form-group">
+                        <label for="surname">*Apellido/s</label>
+                        <input type="text" id="surname" placeholder="Ramírez Gutiérrez" formControlName="apellidos"
+                            [ngClass]="{ 'error': apellidos?.invalid && (apellidos?.dirty || apellidos?.touched) }">
+
+                        <div *ngIf="apellidos?.invalid && (apellidos?.dirty || apellidos?.touched)"
+                            class="error-message">
+                            <div *ngIf="apellidos?.errors?.['required']">
+                                *Los apellidos son requeridos
+                            </div>
+                        </div>
                     </div>
                 </section>
 
                 <h4>Otros datos</h4>
                 <section class="physical-data">
                     <!-- Sexo -->
-                    <div>
-                        <label for="sex">Sexo</label>
-                        <select name="sex" id="sex">
-                            <option value="M">Masculino</option>
+                    <div class="form-group">
+                        <label for="sex">*Sexo</label>
+                        <select id="sex" formControlName="sexo"
+                            [ngClass]="{ 'error': sexo?.invalid && (sexo?.dirty || sexo?.touched) }">
+                            <option value="M" [selected]="true">Masculino</option>
                             <option value="F">Femenino</option>
                         </select>
+
+                        <div *ngIf="sexo?.invalid && (sexo?.dirty || sexo?.touched)" class="error-message">
+                            <div *ngIf="sexo?.errors?.['required']">
+                                *El sexo es requerido
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Altura -->
-                    <div>
-                        <label for="current-height">Altura (cm)</label>
-                        <input type="number" id="current-height" name="current-height">
+                    <div class="form-group">
+                        <label for="current-height">🧍 *Altura (cm)</label>
+                        <input type="number" id="current-height" placeholder="170" formControlName="altura"
+                            [ngClass]="{ 'error': altura?.invalid && (altura?.dirty || altura?.touched) }">
+
+                        <div *ngIf="altura?.invalid && (altura?.dirty || altura?.touched)" class="error-message">
+                            <div *ngIf="altura?.errors?.['min']">
+                                *La altura debe ser mayor o igual a 100 cm
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Peso -->
-                    <div>
-                        <label for="current-weight">Peso (kg)</label>
-                        <input type="number" id="current-weight" name="current-weight">
+                    <div class="form-group">
+                        <label for="current-weight">⚖️ *Peso (kg)</label>
+                        <input type="number" id="current-weight" placeholder="65" formControlName="peso"
+                            [ngClass]="{ 'error': peso?.invalid && (peso?.dirty || peso?.touched) }">
+
+                        <div *ngIf="peso?.invalid && (peso?.dirty || peso?.touched)" class="error-message">
+                            <div *ngIf="peso?.errors?.['min']">
+                                *El peso debe ser mayor o igual a 40 kg
+                            </div>
+                        </div>
                     </div>
 
                 </section>
 
                 <section class="other-data">
                     <!-- Fecha de nacimiento -->
-                    <div>
-                        <label for="birthday">Fecha de nacimiento</label>
-                        <input type="date" id="birthday">
+                    <div class="form-group">
+                        <label for="birthday">*Fecha de nacimiento</label>
+                        <input type="date" id="birthday" formControlName="fechaNacimiento"
+                            [ngClass]="{ 'error': fechaNacimiento?.invalid && (fechaNacimiento?.dirty || fechaNacimiento?.touched) }">
+
+                        <div *ngIf="fechaNacimiento?.invalid && (fechaNacimiento?.dirty || fechaNacimiento?.touched)"
+                            class="error-message">
+                            <div *ngIf="fechaNacimiento?.errors?.['required']">
+                                *La fecha de nacimiento es requerida
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Trato -->
-                    <div>
-                        <label for="trato">Trato</label>
-                        <select name="trato" id="trato">
-                            <option value="N">Neutro</option>
+                    <div class="form-group">
+                        <label for="trato">Trato 💬</label>
+                        <select id="trato" formControlName="trato">
+                            <option value="N" [selected]="true">Neutro</option>
                             <option value="M">Masculino</option>
                             <option value="F">Femenino</option>
                         </select>
                     </div>
                 </section>
 
-                <h3>Datos de contacto</h3>
+                <h3>📇 Datos de contacto</h3>
                 <section class="contact-info">
                     <!-- e-mail -->
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" formControlName="email" [ngClass]="{ 'error': email?.invalid && (email?.dirty || email?.touched) }">
+                    <div class="form-group email">
+                        <label for="email">📧 *e-mail:</label>
+                        <input type="email" id="email" placeholder="hola@ejemplo.com" formControlName="email"
+                            [ngClass]="{ 'error': email?.invalid && (email?.dirty || email?.touched) }">
 
                         <div *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="error-message">
-                            <!-- Verificación e-mail requerido -->
                             <div *ngIf="email?.errors?.['required']">
-                                El email es requerido
+                                *El email es requerido
                             </div>
-
-                            <!-- Verificación e-mail válido -->
                             <div *ngIf="email?.errors?.['email']">
-                                Por favor ingresa un email válido
+                                *Por favor ingresa un email válido
                             </div>
                         </div>
                     </div>
+
                     <!-- Teléfono -->
-                    <div>
-                        <label for="phone">Teléfono</label>
-                        <input type="tel" id="phone" name="phone">
+                    <div class="form-group">
+                        <label for="phone">📞 Teléfono</label>
+                        <input type="tel" id="phone" placeholder="+34 666 777 999" formControlName="telefono"
+                            [ngClass]="{ 'error': telefono?.invalid && (telefono?.dirty || telefono?.touched) }">
+
+                        <div *ngIf="telefono?.invalid && (telefono?.dirty || telefono?.touched)" class="error-message">
+                            <div *ngIf="telefono?.errors?.['pattern']">
+                                *El teléfono debe tener 9 dígitos
+                            </div>
+                        </div>
                     </div>
                 </section>
-
             </fieldset>
-            
+
         </div>
 
         <!-- CLIENT GOALS -->
-        <div class="goals">
-
+        <div class="form-section goals">
             <fieldset>
-                <legend><h2>Objetivos</h2></legend>
+                <legend>
+                    <h2>🎯 Objetivos</h2>
+                </legend>
 
-                <div>
-                    <label for="plan">Objetivo general</label>
-                    <select name="plan" id="plan">
-                        <option value="hipertrofia">Hipertrofia</option>
+                <div class="form-group general-goal">
+                    <label for="plan">*Objetivo general</label>
+                    <select id="plan" formControlName="objetivoGeneral"
+                        [ngClass]="{ 'error': objetivoGeneral?.invalid && (objetivoGeneral?.dirty || objetivoGeneral?.touched) }">
+                        <option value="hipertrofia" [selected]="true">Hipertrofia</option>
                         <option value="mantenimiento">Mantenimiento</option>
                         <option value="weight-loss">Pérdida de peso</option>
                     </select>
+
+                    <div *ngIf="objetivoGeneral?.invalid && (objetivoGeneral?.dirty || objetivoGeneral?.touched)"
+                        class="error-message">
+                        <div *ngIf="objetivoGeneral?.errors?.['required']">
+                            *El objetivo general es requerido
+                        </div>
+                    </div>
                 </div>
-    
-                <!-- Deportivos -->
-                <div class="sport-goals">
-                    <h3>Deportivos</h3>
-        
-                    <div class="workouts-per-week">
-                        <label for="workouts-per-week">Entrenamientos por semana</label>
-                        <select name="workouts-per-week" id="workouts-per-week">
-                            <option value="1">1</option>
+
+                <div class="sport-goals form-subsection">
+                    <h3>🏋 Deportivos</h3>
+
+                    <div class="workouts-per-week form-group">
+                        <label for="workouts-per-week">*Entrenamientos por semana 🗓️</label>
+                        <select id="workouts-per-week" formControlName="entrenamientosPorSemana"
+                            [ngClass]="{ 'error': entrenamientosPorSemana?.invalid && (entrenamientosPorSemana?.dirty || entrenamientosPorSemana?.touched) }">
+                            <option value="1" [selected]="true">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
                             <option value="4">4</option>
@@ -126,29 +191,36 @@
                             <option value="6">6</option>
                             <option value="7">7</option>
                         </select>
+
+                        <div *ngIf="entrenamientosPorSemana?.invalid && (entrenamientosPorSemana?.dirty || entrenamientosPorSemana?.touched)"
+                            class="error-message">
+                            <div *ngIf="entrenamientosPorSemana?.errors?.['required']">
+                                *Los entrenamientos por semana son requeridos
+                            </div>
+                        </div>
                     </div>
-        
-                    <div class="workouts-per-week">
+
+                    <div class="workout-plan form-group">
                         <h4>Tipo de entrenamientos</h4>
                       
                         <div class="options">
                             <div>
-                                <input type="checkbox" id="strenght" name="strenght" checked />
+                                <input type="checkbox" id="strenght" name="strenght" formControlName="workoutPlan" checked />
                                 <label for="strenght">Fuerza</label>
                             </div>
             
                             <div>
-                              <input type="checkbox" id="flexibility" name="flexibility" />
+                              <input type="checkbox" id="flexibility" name="flexibility" formControlName="workoutPlan"/>
                               <label for="flexibility">Flexibilidad</label>
                             </div>
             
                             <div>
-                                <input type="checkbox" id="endurance" name="endurance" />
+                                <input type="checkbox" id="endurance" name="endurance" formControlName="workoutPlan"/>
                                 <label for="endurance">Resistencia</label>
                             </div>
             
                             <div>
-                                <input type="checkbox" id="speed" name="speed" />
+                                <input type="checkbox" id="speed" name="speed" formControlName="workoutPlan"/>
                                 <label for="speed">Velocidad</label>
                             </div>
                         </div>
@@ -156,67 +228,185 @@
                     </div>
                 </div>
 
-                <!-- Nutricionales -->
-                <div class="nutritionals-goals">
-                    <h3>Nutricionales</h3>
+                <div class="nutritionals-goals form-subsection">
+                    <h3>🥗 Nutricionales</h3>
 
                     <!-- Kcal objetivo -->
-                    <div>
+                    <div class="form-group kcal">
                         <label for="kcal">Energía objetivo (en kcal)</label>
-                        <input type="number" id="kcal" name="kcal">
+                        <input type="number" id="kcal" placeholder="2500" formControlName="energiaObjetivo"
+                            [ngClass]="{ 'error': energiaObjetivo?.invalid && (energiaObjetivo?.dirty || energiaObjetivo?.touched) }">
+
+                        <div *ngIf="energiaObjetivo?.invalid && (energiaObjetivo?.dirty || energiaObjetivo?.touched)"
+                            class="error-message">
+                            <div *ngIf="energiaObjetivo?.errors?.['min']">
+                                *La energía debe ser >= a 1000 kcal
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Macros -->
-                    <div class="macros">
-                        <h4>Distribución de macronutrientes (%)</h4>
+                    <div class="macros form-group">
+                        <h4>📊 Distribución de macronutrientes (%)</h4>
 
                         <div class="macros-distribution">
                             <!-- Proteínas -->
-                            <div>
+                            <div class="form-group">
                                 <label for="proteins">Proteínas</label>
-                                <input type="number" id="proteins" name="proteins">
+                                <input type="number" id="proteins" placeholder="25" formControlName="proteinas"
+                                    [ngClass]="{ 'error': proteinas?.invalid && (proteinas?.dirty || proteinas?.touched) }">
+
+                                <div *ngIf="proteinas?.invalid && (proteinas?.dirty || proteinas?.touched)"
+                                    class="error-message">
+                                    <div *ngIf="proteinas?.errors?.['min']">
+                                        *Las proteínas deben ser al menos 10%
+                                    </div>
+                                    <div *ngIf="proteinas?.errors?.['max']">
+                                        *Las proteínas no deben exceder 35%
+                                    </div>
+                                </div>
                             </div>
+
                             <!-- Grasas -->
-                            <div>
+                            <div class="form-group">
                                 <label for="fats">Grasas</label>
-                                <input type="number" id="fats" name="fats">
+                                <input type="number" id="fats" placeholder="30" formControlName="grasas"
+                                    [ngClass]="{ 'error': grasas?.invalid && (grasas?.dirty || grasas?.touched) }">
+
+                                <div *ngIf="grasas?.invalid && (grasas?.dirty || grasas?.touched)"
+                                    class="error-message">
+                                    <div *ngIf="grasas?.errors?.['min']">
+                                        *Las grasas deben ser al menos 20%
+                                    </div>
+                                    <div *ngIf="grasas?.errors?.['max']">
+                                        *Las grasas no deben exceder 40%
+                                    </div>
+                                </div>
                             </div>
+
                             <!-- Carbohidratos -->
-                            <div>
+                            <div class="form-group">
                                 <label for="carbs">Carbohidratos</label>
-                                <input type="number" id="carbs" name="carbs">
+                                <input type="number" id="carbs" placeholder="45" formControlName="carbohidratos"
+                                    [ngClass]="{ 'error': carbohidratos?.invalid && (carbohidratos?.dirty || carbohidratos?.touched) }"
+                                    (input)="recalcularCarbohidratos()">
+
+                                <div *ngIf="carbohidratos?.invalid && (carbohidratos?.dirty || carbohidratos?.touched)"
+                                    class="error-message">
+                                    <div *ngIf="carbohidratos?.errors?.['min']">
+                                        *Los carbohidratos deben ser al menos 40%
+                                    </div>
+                                    <div *ngIf="carbohidratos?.errors?.['max']">
+                                        *Los carbohidratos no deben exceder 60%
+                                    </div>
+                                    <div *ngIf="carbohidratos?.errors?.['total']">
+                                        *El total debe ser del 100%
+                                        <a (click)="recalcularCarbohidratos()">Ajuste automático</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        
                     </div>
 
+                    <!-- Restricciones alimentarias -->
+                    <div class="restrictions">
+                        <h4>🚫 Restricciones, alergias y preferencias alimentarias</h4>
+
+                        <div class="options">
+                            <div>
+                                <input type="checkbox" id="keto" formControlName="restriccionesAlimentarias">
+                                <label for="keto">Keto</label>
+                            </div>
+
+                            <div>
+                                <input type="checkbox" id="low-carb" formControlName="restriccionesAlimentarias" />
+                                <label for="low-carb">Low-carb</label>
+                            </div>
+
+                            <div>
+                                <input type="checkbox" id="plant-based" formControlName="restriccionesAlimentarias" />
+                                <label for="plant-based">Plant-based</label>
+                            </div>
+
+                            <div>
+                                <input type="checkbox" id="dairy" formControlName="restriccionesAlimentarias" />
+                                <label for="dairy">Lácteos</label>
+                            </div>
+
+                            <div>
+                                <input type="checkbox" id="egg" formControlName="restriccionesAlimentarias" />
+                                <label for="egg">Huevo</label>
+                            </div>
+
+                            <div>
+                                <input type="checkbox" id="nuts" formControlName="restriccionesAlimentarias" />
+                                <label for="nuts">Frutos secos</label>
+                            </div>
+
+                            <div>
+                                <input type="checkbox" id="peanut" formControlName="restriccionesAlimentarias" />
+                                <label for="peanut">Cacahuete</label>
+                            </div>
+
+                            <div>
+                                <input type="checkbox" id="fish" formControlName="restriccionesAlimentarias" />
+                                <label for="fish">Pescado</label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="physical-goals">
-                    <h3>Físicos</h3>
+                <div class="physical-goals form-subsection">
+                    <h3>💪 Físicos</h3>
 
                     <section>
-                        <!-- Grasa -->
-                        <div>
-                            <label for="goal-fat">Grasa corporal (%)</label>
-                            <input type="number" id="goal-fat" name="goal-fat">
+                        <!-- Grasa corporal actual -->
+                        <div class="form-group">
+                            <label for="current-fat">%GC Actual</label>
+                            <input type="number" id="current-fat" placeholder="20" formControlName="gcActual"
+                                [ngClass]="{ 'error': gcActual?.invalid && (gcActual?.dirty || gcActual?.touched) }">
+
+                            <div *ngIf="gcActual?.invalid && (gcActual?.dirty || gcActual?.touched)"
+                                class="error-message">
+                                <div *ngIf="gcActual?.errors?.['min'] || gcActual?.errors?.['max']">
+                                    *El %GC debe estar entre 5% y 40%
+                                </div>
+                            </div>
                         </div>
 
-                        <!-- Peso -->
-                        <div>
-                            <label for="goal-weight">Peso (kg)</label>
-                            <input type="goal-number" id="goal-weight" name="goal-weight">
+                        <!-- Grasa corporal objetivo -->
+                        <div class="form-group">
+                            <label for="goal-fat">%GC Objetivo</label>
+                            <input type="number" id="goal-fat" placeholder="15" formControlName="gcObjetivo"
+                                [ngClass]="{ 'error': gcObjetivo?.invalid && (gcObjetivo?.dirty || gcActual?.touched) }">
+
+                            <div *ngIf="gcObjetivo?.invalid && (gcObjetivo?.dirty || gcActual?.touched)"
+                                class="error-message">
+                                <div *ngIf="gcObjetivo?.errors?.['min'] || gcObjetivo?.errors?.['max']">
+                                    *El %GC debe estar entre 5% y 40%
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Peso objetivo -->
+                        <div class="form-group">
+                            <label for="goal-weight">Peso objetivo(kg)</label>
+                            <input type="number" id="goal-weight" placeholder="70" formControlName="pesoObjetivo"
+                                [ngClass]="{ 'error': pesoObjetivo?.invalid && (pesoObjetivo?.dirty || pesoObjetivo?.touched) }">
+
+                            <div *ngIf="pesoObjetivo?.invalid && (pesoObjetivo?.dirty || pesoObjetivo?.touched)"
+                                class="error-message">
+                                <div *ngIf="pesoObjetivo?.errors?.['min']">
+                                    *El peso debe ser mayor o igual a 40 kg
+                                </div>
+                            </div>
                         </div>
                     </section>
-                    
                 </div>
-
             </fieldset>
-
         </div>
-    
-        <!-- button -->
-        <button type="submit" [disabled]="!loginForm.valid" class="submit-button"> Registrar cliente </button>
 
+        <!-- Botón de envío -->
+        <button type="submit" [disabled]="!ngForm.valid" class="submit-button"> Registrar cliente </button>
     </form>
-  </div>
+</div>

@@ -1,3 +1,15 @@
+/* Variables globales */
+:root {
+    --primary-color: rgb(20, 20, 20);
+    --secondary-color: rgb(16, 24, 12);
+    --border-color: rgb(39, 39, 39);
+    --hover-border-color: rgba(172, 255, 47, 0.25);
+    --text-color: greenyellow;
+    --transition-duration: 205ms;
+    --input-bg-color: rgb(46, 46, 46);
+    --input-border-color: rgb(35, 35, 35);
+}
+
 /* General Styles */
 *{ font-family: 'Montserrat', 'Space Grotesk', sans-serif; }
 
@@ -32,7 +44,7 @@ header .navbar ul{
 
 header .navbar ul li:hover{
     text-decoration: underline;
-    color:goldenrod;
+    color:greenyellow;
 }
 
 /* Main */
@@ -130,13 +142,34 @@ main{ background-color: black; padding: 1rem 0;}
     justify-content: center;
 }
 
+.register-client-form *{
+    font-family: 'Funnel Display';
+}
+
+.register-client-form h1{
+    margin: 1rem auto;
+
+    text-transform: uppercase;
+    font-family: 'Funnel Display';
+}
+
+.register-client-form .assigned-trainer{ margin-bottom: 1rem;}
+
 .register-client-form form{
-    width: 35rem;
+    width: 39rem;
     min-width: fit-content;
 
     display: flex;
     flex-direction: column;
 }
+
+.register-client-form .form-section{
+    margin-bottom: 1rem;
+}
+
+.register-client-form .form-subsection{ border-top: solid 1px white; margin-bottom: 1rem;}
+
+.register-client-form .general-goal{ margin: 1rem 0; }
 
 .register-client-form form div section{
     display: flex;
@@ -149,10 +182,72 @@ main{ background-color: black; padding: 1rem 0;}
     padding-right: 0.5em;
 }
 
-.goals h3{ margin: 1rem auto 0.75rem auto; }
+.register-client-form button{
+    text-transform: uppercase;
+    padding: 0.5rem;
 
-.goals h4{ margin: 0.75rem auto 0.5rem auto; }
+    color: greenyellow;
+    font-weight: 600;
+
+    transition: ease all 205ms;
+
+    background-color: transparent;
+    border: solid 1px greenyellow;
+}
+
+.register-client-form button:hover{
+    background-color: greenyellow;
+    color: black;
+    cursor: pointer;
+}
+
+.register-client-form button:disabled{
+    background-color: rgb(16, 24, 12);
+    border: solid 1px rgba(172, 255, 47, 0.05);
+    color:rgba(255, 255, 255, 0.2);
+    cursor: not-allowed;
+}
+
+.goals h3{ margin: 1rem auto 0.5rem auto; }
+
+.goals h4{ margin: 1rem auto 0.5rem auto; }
 
 .goals .macros .macros-distribution, .physical-goals section { width: 100%; display: inline-flex; justify-content: space-between; }
 
 .macros input, .physical-data input, .physical-goals input{ width: 3rem; }
+
+.register-client-form .options{ display: grid; grid-template-columns: repeat(2, 1fr);}
+
+.register-client-form .kcal{ display: flex; gap: 2rem; align-items: center;}
+
+.register-client-form input, select{
+    background-color: rgb(46, 46, 46);
+    border: solid 2px rgb(35, 35, 35);
+    color: greenyellow;
+}
+
+.physical-data .form-group, .macros-distribution .form-group, .physical-goals .form-group{
+    max-width: 33%;
+}
+
+.kcal input{ width: 4rem; }
+
+.error-message{
+    margin-top: 0.5rem;
+    max-width: 100%;
+
+    color: greenyellow;
+    font-size: 0.8rem;
+
+    text-wrap: wrap;
+}
+
+.error-message a{ text-decoration: underline; cursor: pointer; transition: ease all 200ms; }
+.error-message a:hover{ color: rgb(205, 255, 131); }
+
+.contact-info { gap: 1rem; }
+
+.contact-info .email input{ width: 12rem; }
+
+/* Footer */
+footer{ background-color: black; }
