@@ -1,14 +1,14 @@
 /* General Styles */
-*{ font-family: 'Montserrat', 'Space Grotesk', sans-serif; color: white }
+*{ font-family: 'Montserrat', 'Space Grotesk', sans-serif; }
 
 a{ text-decoration: none; }
 a, a:visited{ color: inherit; }
 
 ul, li{ list-style: none; }
 
-h1, h2, h3, p, a, ul{ margin: 0; padding: 0; }
+h1, h2, h3, h4, p, a, ul{ margin: 0; padding: 0; }
 
-body{ margin: 0; }
+body{ margin: 0; color: white }
 
 /* header, main, footer{ padding-left: 1em; padding-right: 1em; } */
 
@@ -30,7 +30,13 @@ header .navbar ul{
     font-weight: 500;
 }
 
-main{ background-color: black; }
+header .navbar ul li:hover{
+    text-decoration: underline;
+    color:goldenrod;
+}
+
+/* Main */
+main{ background-color: black; padding: 1rem 0;}
 
 /* Home page */
 #homepage{
@@ -45,6 +51,7 @@ main{ background-color: black; }
 
 .sidebar-container, .home-container{ padding: 1rem; }
 
+/* -Sidebar- */
 .sidebar-container{
     width: 25%;
 
@@ -57,6 +64,95 @@ main{ background-color: black; }
     border-left: solid white 1px;
 }
 
+/* -Home container- */
 .home-container{
     width: 100%;
 }
+
+#homepage #greeting{
+    font-size: 1.5rem;
+    padding: 0.5rem 0 3rem 0;
+}
+
+.trainer-name{ font-weight: 700; color: greenyellow; font-size: 2.75rem;}
+
+#homepage h1{ font-weight: 400; }
+#homepage h2{ padding: 0.25rem 0; border-bottom: solid 1px white; }
+#homepage .clients-container{ padding: 0.5rem 0 }
+
+/* Clients */
+.client-container{
+    min-height: fit-content;
+
+    display: flex;
+    gap: 0.25rem;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0.75rem;
+    margin: 1rem 0;
+
+    background-color: rgb(20, 20, 20);
+    border: solid 1px rgb(39, 39, 39);
+
+    transition: ease all 175ms;
+}
+
+.client-container:hover {
+    background-color: rgb(16, 24, 12);
+    border: solid 1px rgba(172, 255, 47, 0.25);
+    color: greenyellow;
+}
+
+.new-client-btn button{
+    padding: 0.3rem;
+
+    background-color: transparent;
+    border: solid 1px greenyellow;
+
+    color: greenyellow;
+    font-weight: 600;
+
+    transition: ease all 205ms;
+}
+
+.new-client-btn button:hover{
+    background-color: greenyellow;
+
+    color: black;
+    cursor: pointer;
+}
+
+.register-client-form{
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+}
+
+.register-client-form form{
+    width: 35rem;
+    min-width: fit-content;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.register-client-form form div section{
+    display: flex;
+    justify-content: space-between;
+
+    margin: 1rem auto;
+}
+
+.register-client-form form label{
+    padding-right: 0.5em;
+}
+
+.goals h3{ margin: 1rem auto 0.75rem auto; }
+
+.goals h4{ margin: 0.75rem auto 0.5rem auto; }
+
+.goals .macros .macros-distribution, .physical-goals section { width: 100%; display: inline-flex; justify-content: space-between; }
+
+.macros input, .physical-data input, .physical-goals input{ width: 3rem; }

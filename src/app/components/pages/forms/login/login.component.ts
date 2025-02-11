@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angula
 import { Router } from '@angular/router';
 import { PseudoauthService } from '../../../../services/pseudoauth.service';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -21,8 +22,9 @@ export class LoginComponent implements OnInit {
   constructor(
     // Usamos el pseudologin de momento
     private firebaseService: PseudoauthService,
+    private auth: AuthService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
 

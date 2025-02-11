@@ -1,1 +1,19 @@
-<p>client-list works!</p>
+
+<a [routerLink]="['/register-client', uid]" class="new-client-btn">
+    <button>Registrar nuevo cliente</button>
+</a>
+
+<a [routerLink]="['/client-info', uid, id]" class="client-container">
+    <div class="client-info">
+        <h3>Client-name</h3>
+        <p>Client since</p>
+    </div>
+
+    <div class="client-stats">
+        <h3>Stats</h3>
+    </div>
+
+    <div class="next-workouts">
+        <h3>Próximos workouts</h3>
+    </div>
+</a>

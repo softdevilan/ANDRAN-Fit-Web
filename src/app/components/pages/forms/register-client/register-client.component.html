@@ -1,1 +1,222 @@
-<p>register-client works!</p>
+<div class="register-client-form">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <h1>Registro de cliente</h1>
+
+        <!-- CLIENT PERSONAL INFO -->
+        <div class="client-info">
+            
+            <fieldset>               
+                <legend><h2>Datos del cliente</h2></legend>
+                
+                <h3>Información personal</h3>
+                <section class="name">
+                    <!-- Nombre -->
+                    <div>
+                        <label for="firstName">Nombre</label>
+                        <input type="firstname" id="name">
+                    </div>
+
+                    <!-- Apellidos -->
+                    <div>
+                        <label for="surname">Apellido/s</label>
+                        <input type="surname" id="name">
+                    </div>
+                </section>
+
+                <h4>Otros datos</h4>
+                <section class="physical-data">
+                    <!-- Sexo -->
+                    <div>
+                        <label for="sex">Sexo</label>
+                        <select name="sex" id="sex">
+                            <option value="M">Masculino</option>
+                            <option value="F">Femenino</option>
+                        </select>
+                    </div>
+
+                    <!-- Altura -->
+                    <div>
+                        <label for="current-height">Altura (cm)</label>
+                        <input type="number" id="current-height" name="current-height">
+                    </div>
+
+                    <!-- Peso -->
+                    <div>
+                        <label for="current-weight">Peso (kg)</label>
+                        <input type="number" id="current-weight" name="current-weight">
+                    </div>
+
+                </section>
+
+                <section class="other-data">
+                    <!-- Fecha de nacimiento -->
+                    <div>
+                        <label for="birthday">Fecha de nacimiento</label>
+                        <input type="date" id="birthday">
+                    </div>
+
+                    <!-- Trato -->
+                    <div>
+                        <label for="trato">Trato</label>
+                        <select name="trato" id="trato">
+                            <option value="N">Neutro</option>
+                            <option value="M">Masculino</option>
+                            <option value="F">Femenino</option>
+                        </select>
+                    </div>
+                </section>
+
+                <h3>Datos de contacto</h3>
+                <section class="contact-info">
+                    <!-- e-mail -->
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" formControlName="email" [ngClass]="{ 'error': email?.invalid && (email?.dirty || email?.touched) }">
+
+                        <div *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="error-message">
+                            <!-- Verificación e-mail requerido -->
+                            <div *ngIf="email?.errors?.['required']">
+                                El email es requerido
+                            </div>
+
+                            <!-- Verificación e-mail válido -->
+                            <div *ngIf="email?.errors?.['email']">
+                                Por favor ingresa un email válido
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Teléfono -->
+                    <div>
+                        <label for="phone">Teléfono</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                </section>
+
+            </fieldset>
+            
+        </div>
+
+        <!-- CLIENT GOALS -->
+        <div class="goals">
+
+            <fieldset>
+                <legend><h2>Objetivos</h2></legend>
+
+                <div>
+                    <label for="plan">Objetivo general</label>
+                    <select name="plan" id="plan">
+                        <option value="hipertrofia">Hipertrofia</option>
+                        <option value="mantenimiento">Mantenimiento</option>
+                        <option value="weight-loss">Pérdida de peso</option>
+                    </select>
+                </div>
+    
+                <!-- Deportivos -->
+                <div class="sport-goals">
+                    <h3>Deportivos</h3>
+        
+                    <div class="workouts-per-week">
+                        <label for="workouts-per-week">Entrenamientos por semana</label>
+                        <select name="workouts-per-week" id="workouts-per-week">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                        </select>
+                    </div>
+        
+                    <div class="workouts-per-week">
+                        <h4>Tipo de entrenamientos</h4>
+                      
+                        <div class="options">
+                            <div>
+                                <input type="checkbox" id="strenght" name="strenght" checked />
+                                <label for="strenght">Fuerza</label>
+                            </div>
+            
+                            <div>
+                              <input type="checkbox" id="flexibility" name="flexibility" />
+                              <label for="flexibility">Flexibilidad</label>
+                            </div>
+            
+                            <div>
+                                <input type="checkbox" id="endurance" name="endurance" />
+                                <label for="endurance">Resistencia</label>
+                            </div>
+            
+                            <div>
+                                <input type="checkbox" id="speed" name="speed" />
+                                <label for="speed">Velocidad</label>
+                            </div>
+                        </div>
+        
+                    </div>
+                </div>
+
+                <!-- Nutricionales -->
+                <div class="nutritionals-goals">
+                    <h3>Nutricionales</h3>
+
+                    <!-- Kcal objetivo -->
+                    <div>
+                        <label for="kcal">Energía objetivo (en kcal)</label>
+                        <input type="number" id="kcal" name="kcal">
+                    </div>
+
+                    <!-- Macros -->
+                    <div class="macros">
+                        <h4>Distribución de macronutrientes (%)</h4>
+
+                        <div class="macros-distribution">
+                            <!-- Proteínas -->
+                            <div>
+                                <label for="proteins">Proteínas</label>
+                                <input type="number" id="proteins" name="proteins">
+                            </div>
+                            <!-- Grasas -->
+                            <div>
+                                <label for="fats">Grasas</label>
+                                <input type="number" id="fats" name="fats">
+                            </div>
+                            <!-- Carbohidratos -->
+                            <div>
+                                <label for="carbs">Carbohidratos</label>
+                                <input type="number" id="carbs" name="carbs">
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                </div>
+
+                <div class="physical-goals">
+                    <h3>Físicos</h3>
+
+                    <section>
+                        <!-- Grasa -->
+                        <div>
+                            <label for="goal-fat">Grasa corporal (%)</label>
+                            <input type="number" id="goal-fat" name="goal-fat">
+                        </div>
+
+                        <!-- Peso -->
+                        <div>
+                            <label for="goal-weight">Peso (kg)</label>
+                            <input type="goal-number" id="goal-weight" name="goal-weight">
+                        </div>
+                    </section>
+                    
+                </div>
+
+            </fieldset>
+
+        </div>
+    
+        <!-- button -->
+        <button type="submit" [disabled]="!loginForm.valid" class="submit-button"> Registrar cliente </button>
+
+    </form>
+  </div>

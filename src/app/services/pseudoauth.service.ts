@@ -40,14 +40,53 @@ export class PseudoauthService {
     }
   }
 
-  // Devuelve el UID
-  getUID() {
-    return this.trainerUID;
+  async getTrainerName(uid: string | null): Promise<string | null> {
+    if (!uid) {
+      console.log("❌ getTrainerName: UID es null");
+      return null;
+    }
+  
+    console.log("🔍 Buscando nombre del entrenador para UID:", uid);
+    
+    try {
+      const nameRef = ref(this.db, `Usuarios/Entrenadores/${uid}/Nombre`);
+      const snapshot = await get(nameRef);
+  
+      if (snapshot.exists()) {
+        const nombreData = snapshot.val();
+        console.log("✅ Nombre obtenido:", nombreData);
+        return `${nombreData.Nombre} ${nombreData.Apellido1}`;
+      } else {
+        console.log("❌ No se encontró nombre para UID:", uid);
+        return null;
+      }
+    } catch (error) {
+      console.error("🔥 Error en getTrainerName:", error);
+      return null;
+    }
+  }  
+
+  async getTrainerClients(uid: string | null): Promise<string[] | null> {
+    try {
+      const clientesRef = ref(this.db, `Usuarios/Entrenadores/${uid}/Clientes`);
+      const snapshot = await get(clientesRef);
+      if (snapshot.exists()) {
+        return Object.keys(snapshot.val()); // Devuelve una lista de UIDs de clientes
+      }
+      return null;
+    } catch (error) {
+      console.error('Error al obtener los clientes del entrenador:', error);
+      return null;
+    }
   }
 
   // Devuelve si está loggeado o no
   isLoggedIn() {
     this.isLogged = this.trainerUID !== undefined;
     return this.isLogged;
+  }
+
+  getUID() { 
+    return this.trainerUID;
   }
 }
