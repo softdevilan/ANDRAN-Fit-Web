@@ -1,5 +1,6 @@
 <div class="register-client-form">
     <form [formGroup]="ngForm" (ngSubmit)="onSubmit()">
+
         <h1>Registro de cliente</h1>
         <select name="assigned-trainer" id="assigned-trainer" formControlName="entrenador" class="assigned-trainer">
             <option value="">-Sin entrenador asignado-</option>
@@ -7,15 +8,15 @@
                 {{ entrenador.nombre }} {{ entrenador.apellido1 }} - {{ entrenador.uid }}
             </option>
         </select>
+
         <!-- CLIENT PERSONAL INFO -->
         <div class="form-section client-info">
-
             <fieldset>
                 <legend>
                     <h2>🧑‍💻 Datos del cliente</h2>
                 </legend>
 
-                <h3>🧑 Información personal</h3>
+                <h3>Información personal</h3>
                 <section class="name">
                     <!-- Nombre -->
                     <div class="form-group">
@@ -147,9 +148,8 @@
                             </div>
                         </div>
                     </div>
-                </section>
+                </section>               
             </fieldset>
-
         </div>
 
         <!-- CLIENT GOALS -->
@@ -159,7 +159,8 @@
                     <h2>🎯 Objetivos</h2>
                 </legend>
 
-                <div class="form-group general-goal">
+                <!-- Objetivos generales -->
+                <section class="form-group general-goal">
                     <label for="plan">*Objetivo general</label>
                     <select id="plan" formControlName="objetivoGeneral"
                         [ngClass]="{ 'error': objetivoGeneral?.invalid && (objetivoGeneral?.dirty || objetivoGeneral?.touched) }">
@@ -174,8 +175,9 @@
                             *El objetivo general es requerido
                         </div>
                     </div>
-                </div>
+                </section>
 
+                <!-- Deportivos -->
                 <div class="sport-goals form-subsection">
                     <h3>🏋 Deportivos</h3>
 
@@ -228,7 +230,8 @@
                     </div>
                 </div>
 
-                <div class="nutritionals-goals form-subsection">
+                <!-- Nutricionales -->
+                <div class="nutritional-goals form-subsection">
                     <h3>🥗 Nutricionales</h3>
 
                     <!-- Kcal objetivo -->
@@ -356,6 +359,7 @@
                     </div>
                 </div>
 
+                <!-- Físicos -->
                 <div class="physical-goals form-subsection">
                     <h3>💪 Físicos</h3>
 

@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     const currentUrl = this.router.url;
     console.log("🔗 URL actual:", currentUrl);
   
-    const matches = currentUrl.match(/\/(?:home|clients|workouts)\/([^/]+)/);
+    const matches = currentUrl.match(/\/(?:home|clients|workouts|register-client)\/([^/]+)/);
     this.uid = matches ? matches[1] : null;
     console.log("🆔 UID extraído:", this.uid);
   
@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         console.log("🚀 Evento NavigationEnd detectado!");
         const updatedUrl = this.router.url;
         console.log("🔗 URL tras NavigationEnd:", updatedUrl);
-        const newMatches = updatedUrl.match(/\/(?:home|clients|workouts)\/([^/]+)/);
+        const newMatches = updatedUrl.match(/\/(?:home|clients|workouts|register-client)\/([^/]+)/);
         return newMatches ? newMatches[1] : null;
       })
     ).subscribe(uid => {
@@ -55,7 +55,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.user = this.authService.getCurrentUser();
     console.log(this.user);
   }
-  
 
   ngOnDestroy(): void {
     if (this.routeSub) {

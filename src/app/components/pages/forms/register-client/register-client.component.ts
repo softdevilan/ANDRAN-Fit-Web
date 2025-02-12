@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, Validators, FormControl } from '@angular/forms';
-import { Database, ref, get, child } from '@angular/fire/database';
-
+import { Database, ref, get, set } from '@angular/fire/database';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-register-client',
   standalone: true,
@@ -39,7 +39,7 @@ export class RegisterClientComponent {
     pesoObjetivo: new FormControl('', [Validators.min(40)])
   });
 
-  constructor() {
+  constructor(private router: Router) {
     this.ngForm.get('proteinas')?.valueChanges.subscribe(() => this.validarTotalMacronutrientes());
     this.ngForm.get('grasas')?.valueChanges.subscribe(() => this.validarTotalMacronutrientes());
   }
@@ -48,9 +48,10 @@ export class RegisterClientComponent {
     this.obtenerEntrenadores();
   }
 
+  /* Obtener listado de entrenadores */
   async obtenerEntrenadores() {
     const dbRef = ref(this.db, 'Usuarios/Entrenadores');
-    
+
     try {
       const snapshot = await get(dbRef);
       if (snapshot.exists()) {
@@ -67,17 +68,17 @@ export class RegisterClientComponent {
       console.error('Error obteniendo entrenadores:', error);
     }
   }
-  
 
+  /* Cálculos de macros */
   recalcularCarbohidratos() {
     const proteinas = parseFloat(this.proteinas?.value || '0');
     const grasas = parseFloat(this.grasas?.value || '0');
     const totalActual = proteinas + grasas;
-    
+
     if (totalActual <= 100) {
       this.carbohidratos?.setValue((100 - totalActual).toString());
     }
-    
+
     this.validarTotalMacronutrientes();
   }
 
@@ -94,10 +95,149 @@ export class RegisterClientComponent {
     }
   }
 
+  /* Crear cliente */
+  crearCliente(formData: any): any {
+    const timestampActual = Math.floor(Date.now() / 1000);
+    const fechaNacimiento = formData.fechaNacimiento;
+    const timestampNacimiento = fechaNacimiento ?
+        Math.floor(new Date(fechaNacimiento).getTime() / 1000) : null;
+    const clienteUID = "ATH" + (timestampActual * 10);
+    
+    return {
+        [clienteUID]: {
+            "Activo": true,
+            "Entrenadores": formData.entrenador ? {
+              [formData.entrenador]: {
+                "Desde": timestampActual
+              }
+            } : [],
+            "Fecha nacimiento": timestampNacimiento,
+            "Mediciones": {
+                "Actual": {
+                    "Altura": formData.altura || 0,
+                    "Fecha": timestampActual,
+                    "Grasa": formData.gcActual || null,
+                    "Peso": formData.peso || 0
+                }
+            },
+            "Nombre": {
+                "Apellido1": formData.apellidos?.split(' ')?.[0] ?? '',
+                "Apellido2": formData.apellidos?.split(' ')?.[1] ?? '',
+                "Nombre": formData.nombre || ''
+            },
+            "Objetivos": {
+                "Deportivos": {
+                    "Entrenamientos por semana": formData.entrenamientosPorSemana || 0
+                },
+                "Nutricionales": {
+                    "Carbohidratos": parseFloat(formData.carbohidratos) || 0,
+                    "Grasas": parseFloat(formData.grasas) || 0,
+                    "Kcal": parseInt(formData.energiaObjetivo) || null,
+                    "Proteínas": parseFloat(formData.proteinas) || 0,
+                    "Restricciones": formData.restriccionesAlimentarias ? 
+                        JSON.parse(formData.restriccionesAlimentarias) : {}
+                },
+                "Físicos": {
+                    "Grasa": parseFloat(formData.gcObjetivo) || null,
+                    "Peso": parseInt(formData.pesoObjetivo) || null
+                }
+            },
+            "Registro": timestampActual,
+            "Sexo": formData.sexo || '',
+            "Workouts": {
+                "Pendientes": []
+            }
+        }
+    };
+  }
+  /* -Para cuando esté el authenticator- */
+  crearClienteUID(formData: any, clienteUID: string): any {
+    const timestampActual = Math.floor(Date.now() / 1000); // Timestamp actual en segundos
+
+    return {
+      [clienteUID]: {
+        "Activo": true,
+        "Entrenadores": formData.entrenador ? {
+          [formData.entrenador]: {
+            "Desde": timestampActual
+          }
+        } : [],
+        "Fecha nacimiento": new Date(formData.fechaNacimiento).getTime() / 1000, // Convertir a timestamp
+        "Mediciones": {
+          "Actual": {
+            "Altura": formData.altura || 0,
+            "Fecha": timestampActual,
+            "Grasa": formData.gcActual || null,
+            "Peso": formData.peso
+          }
+        },
+        "Nivel de actividad": formData.entrenamientosPorSemana,
+        "Nombre": {
+          "Apellido1": formData.apellidos ? formData.apellidos.split(' ')[0] || '' : '',
+          "Apellido2": formData.apellidos ? formData.apellidos.split(' ')[1] || '' : '',
+          "Nombre": formData.nombre || ''
+        },
+        "Objetivos": {
+          "Deportivos": {
+            "Entrenamientos por semana": formData.entrenamientosPorSemana
+          },
+          "Físicos": {
+            "Grasa": formData.gcObjetivo || null,
+            "Peso": formData.pesoObjetivo || null
+          },
+          "Nutricionales": {
+            "Carbohidratos": formData.carbohidratos,
+            "Grasas": formData.grasas,
+            "Kcal": formData.energiaObjetivo || null,
+            "Proteínas": formData.proteinas,
+            "Restricciones": formData.restriccionesAlimentarias ? JSON.parse(formData.restriccionesAlimentarias) : {}
+          },
+          "Plan": formData.objetivoGeneral
+        },
+        "Registro": timestampActual,
+        "Sexo": formData.sexo,
+        "Workouts": {
+          "Pendientes": [] // Inicialmente vacío
+        }
+      }
+    }
+  }
+
+  /* Registrar cliente */
+  registrarCliente(cliente: any) {
+    const clienteUID = Object.keys(cliente)[0];
+    const clienteRef = ref(this.db, `Usuarios/Clientes/${clienteUID}`);
+
+    set(clienteRef, cliente[clienteUID])
+      .then(() => {
+        console.log("Cliente agregado correctamente.");
+      })
+      .catch((error) => {
+        console.error("Error al agregar cliente:", error);
+      });
+  }
+
+  /* Enviar cliente a Firebase */
   async onSubmit(): Promise<void> {
     if (this.ngForm.valid) {
-      console.log('Datos del cliente:', this.ngForm.value);
-      // Aquí puedes enviar los datos al backend o procesarlos
+        try {
+            // Obtener los valores del formulario directamente
+            const formData = this.ngForm.value;
+            
+            // Crear el objeto cliente con los datos validados
+            const cliente = this.crearCliente(formData);
+            
+            // Registrar el cliente y esperar la respuesta
+            await this.registrarCliente(cliente);
+            
+            // Limpiar el formulario después de un registro exitoso
+            this.ngForm.reset();
+
+            //this.router.navigate(['/home', uid]);
+            
+        } catch (error) {
+            console.error('Error durante el proceso:', error);
+        }
     }
   }
 
