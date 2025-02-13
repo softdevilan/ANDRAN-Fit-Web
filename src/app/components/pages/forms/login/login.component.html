@@ -1,45 +1,51 @@
-<div class="login-container">
-    <h1>Inicio de sesión</h1>
-    <h2>Entrenadores</h2>
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+<fieldset class="login-container">
 
-      <!-- e-mail -->
-      <div class="form-group">
+  <legend>
+    <h1>👋 Inicio de sesión</h1>
+  </legend>
 
-        <div class="input-container">
-          <p>👤</p>
-          <input type="email" id="email" formControlName="email" placeholder="e-mail" [ngClass]="{ 'error': email?.invalid && (email?.dirty || email?.touched) }">
-        </div>
+  <h2>Entrenadores</h2>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
-        <div class="error-message">
-          <!-- Verificación e-mail requerido -->
-          <p *ngIf="email?.errors?.['required']">El email es requerido</p>          
+    <!-- e-mail -->
+    <div class="form-group">
 
-          <!-- Verificación e-mail válido -->
-          <p *ngIf="email?.errors?.['email']">Por favor ingresa un email válido</p>          
-
-        </div>
+      <div class="input-container">
+        <p>👤</p>
+        <input type="email" id="email" formControlName="email" placeholder="e-mail"
+          [ngClass]="{ 'error': email?.invalid && (email?.dirty || email?.touched) }">
       </div>
-  
-      <!-- password -->
-      <div class="form-group">
-        <div class="input-container">
-          <p>🔒</p>
-          <input type="password" id="password" formControlName="password" placeholder="Contraseña" [ngClass]="{ 'error': password?.invalid && (password?.dirty || password?.touched) }">
-        </div>
-        <div class="error-message">
 
-          <!-- Verificación contraseña requerida -->
-          <p *ngIf="password?.errors?.['required']">La contraseña es requerida</p>
+      <div class="error-message">
+        <!-- Verificación e-mail requerido -->
+        <p *ngIf="email?.errors?.['required']">El email es requerido</p>
 
-          <!-- Verificación contraseña válida -->
-          <p *ngIf="password?.errors?.['minlength']">La contraseña debe tener al menos 6 caracteres</p>
+        <!-- Verificación e-mail válido -->
+        <p *ngIf="email?.errors?.['email']">Por favor ingresa un email válido</p>
 
-        </div>
       </div>
-  
-      <!-- button -->
-      <button type="submit" [disabled]="!loginForm.valid" class="submit-button"> Iniciar Sesión </button>
+    </div>
 
-    </form>
-  </div>
+    <!-- password -->
+    <div class="form-group">
+      <div class="input-container">
+        <p>🔒</p>
+        <input type="password" id="password" formControlName="password" placeholder="Contraseña"
+          [ngClass]="{ 'error': password?.invalid && (password?.dirty || password?.touched) }">
+      </div>
+      <div class="error-message">
+
+        <!-- Verificación contraseña requerida -->
+        <p *ngIf="password?.errors?.['required']">La contraseña es requerida</p>
+
+        <!-- Verificación contraseña válida -->
+        <p *ngIf="password?.errors?.['minlength']">La contraseña debe tener al menos 6 caracteres</p>
+
+      </div>
+    </div>
+
+    <!-- button -->
+    <button type="submit" [disabled]="!loginForm.valid" class="submit-button"> Iniciar Sesión </button>
+
+  </form>
+</fieldset>

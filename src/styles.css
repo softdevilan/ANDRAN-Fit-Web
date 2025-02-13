@@ -24,12 +24,12 @@ body{ margin: 0; color: white }
 
 /* header, main, footer{ padding-left: 1em; padding-right: 1em; } */
 
-main{ min-height: 90vh; padding: 2rem 5rem;}
+main{ min-height: 90vh; padding: 2rem 10vw; }
 
 /* Header */
 header{ height: 8vh; background-color: black; color: white; padding-top: 1rem; padding-bottom: 1rem; border-bottom: solid 2px white;}
 
-header .navbar{ height: 100%; display: flex; justify-content: center; align-items: center; }
+header .navbar{ height: 100%; display: flex; justify-content: space-between; align-items: center; padding: 0 4rem;}
 
 header .navbar ul{ 
     width: 30%; min-width: fit-content; 
@@ -46,6 +46,10 @@ header .navbar ul li:hover{
     text-decoration: underline;
     color:greenyellow;
 }
+
+.logout-container, .logo-container{ width: 4rem; }
+
+.logo-container img{ width: 100%; }
 
 /* Main */
 main{ background-color: black; }
@@ -143,7 +147,7 @@ main{ background-color: black; }
     padding-right: 0.5em;
 }
 
-.register-client-form button{
+.register-client-form button, header button{
     text-transform: uppercase;
     padding: 0.5rem;
 
@@ -156,7 +160,7 @@ main{ background-color: black; }
     border: solid 1px greenyellow;
 }
 
-.register-client-form button:hover{
+.register-client-form button:hover, header button:hover{
     background-color: greenyellow;
     color: black;
     cursor: pointer;
@@ -230,7 +234,7 @@ main{ background-color: black; }
     justify-content: space-between;
     align-items: center;
 
-    padding: 1rem;
+    padding: 1.5rem 1rem;
 
     background-color: rgb(20, 20, 20);
     border: solid 1px rgb(39, 39, 39);
@@ -251,6 +255,7 @@ main{ background-color: black; }
     border: solid 1px greenyellow;
 
     color: greenyellow;
+    text-transform: uppercase;
     font-weight: 600;
 
     transition: ease all 205ms;

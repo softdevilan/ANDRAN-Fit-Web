@@ -1,89 +1,150 @@
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { ReactiveFormsModule, FormGroup, Validators, FormControl } from '@angular/forms';
+import { Database, ref, get, set, push } from '@angular/fire/database';
 import { NavigationEnd, Router } from '@angular/router';
-import { PseudoauthService } from '../../../../services/pseudoauth.service';
 import { filter, map, Subscription } from 'rxjs';
-import { AuthService } from '../../../../services/auth.service';
-import { Database, ref, get, set } from '@angular/fire/database';
 
 @Component({
   selector: 'app-register-workout',
-  imports: [CommonModule ],
+  imports: [ CommonModule, ReactiveFormsModule],
   templateUrl: './register-workout.component.html',
   styleUrl: './register-workout.component.css'
 })
-
 export class RegisterWorkoutComponent {
   trainerUid: string | null = null;
   clientUid: string | null = null;
-
   private db = inject(Database);
   private routeSub!: Subscription;
 
   workoutsArray: any[] = [];
+  exercisesArray: any[] = [];
+  client: any;
 
-  constructor(private router: Router, private firebase: PseudoauthService, private authService: AuthService) {}
+  formVisible: boolean = false;
+
+  ngForm = new FormGroup({
+    fechaPropuesta: new FormControl('', [Validators.required]),
+    duracionPropuesta: new FormControl('', [Validators.required]),
+  });
+
+  ngExercForm = new FormGroup({
+    nombreEjercicio: new FormControl('', [Validators.required]),
+    reps: new FormControl('', [Validators.required]),
+    series: new FormControl('', [Validators.required]),
+    peso: new FormControl(''),
+    progresivo: new FormControl(''),
+    variacion: new FormControl(''),
+    indicaciones: new FormControl('')
+  });
+
+  constructor(private router: Router) {}
   
-  async obtenerEjercicios(){
-    const clientRef = ref(this.db, `Deporte/Workouts`);
+  async obtenerEjercicios() {
+    const workoutRef = ref(this.db, `Deporte/Workouts`);
     try {
-      const snapshot = await get(clientRef);
+      const snapshot = await get(workoutRef);
       if (snapshot.exists()) {
-        this.workoutsArray = snapshot.val();
+        this.workoutsArray = Object.values(snapshot.val());
         console.log("✅ Workouts obtenidos:", this.workoutsArray);
       } else {
-        console.log("⚠️ Workouts no encontrados en la base de datos.");
+        console.log("⚠️ Workouts no encontrados.");
       }
     } catch (error) {
       console.error("❌ Error obteniendo workouts:", error);
     }
   }
 
-  ngOnInit(): void {
-    console.log("📝 RegisterWorkout inicializado");
-  
-    const currentUrl = this.router.url;
-    console.log("🔗 URL actual:", currentUrl);
-  
-    // Expresión regular para capturar ambos UID (entrenador y cliente)
-    const matches = currentUrl.match(/\/register-workout\/([^/]+)\/([^/]+)/);
-  
-    if (matches) {
-      this.trainerUid = matches[1]; // Primer UID (entrenador)
-      this.clientUid = matches[2];  // Segundo UID (cliente)
-    } else {
-      this.trainerUid = null;
-      this.clientUid = null;
-    }
-  
-    console.log("🆔 Entrenador UID:", this.trainerUid);
-    console.log("🆔 Cliente UID:", this.clientUid);
-  
-    if (this.trainerUid && this.clientUid) {
-      console.log("📢 Consultando ejercicios en Firebase...");
-      this.obtenerEjercicios();
-    }
-  
-    this.routeSub = this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd),
-      map(() => {
-        console.log("🚀 Evento NavigationEnd detectado!");
-        const updatedUrl = this.router.url;
-        console.log("🔗 URL tras NavigationEnd:", updatedUrl);
-  
-        // Vuelve a extraer los UIDs tras la navegación
-        const newMatches = updatedUrl.match(/\/register-workout\/([^/]+)\/([^/]+)/);
-        return newMatches ? { trainerUid: newMatches[1], clientUid: newMatches[2] } : null;
-      })
-    ).subscribe(data => {
-      if (data) {
-        this.trainerUid = data.trainerUid;
-        this.clientUid = data.clientUid;
-        console.log("✅ UID Entrenador actualizado:", this.trainerUid);
-        console.log("✅ UID Cliente actualizado:", this.clientUid);
-        // this.clientData = this.firebase.getClientData(this.trainerUid, this.clientUid);
+  async obtenerCliente() {
+    if (!this.clientUid) return;
+    const clientRef = ref(this.db, `Usuarios/Clientes/${this.clientUid}`);
+    try {
+      const snapshot = await get(clientRef);
+      if (snapshot.exists()) {
+        this.client = snapshot.val();
+        console.log("✅ Cliente obtenido:", this.client);
+      } else {
+        console.log("⚠️ Cliente no encontrado.");
       }
-    });
+    } catch (error) {
+      console.error("❌ Error obteniendo cliente:", error);
+    }
   }
 
+  ngOnInit(): void {
+    console.log("📝 RegisterWorkout inicializado");
+    const matches = this.router.url.match(/\/register-workout\/([^/]+)\/([^/]+)/);
+    if (matches) {
+      this.trainerUid = matches[1];
+      this.clientUid = matches[2];
+    }
+    this.obtenerCliente();
+    this.obtenerEjercicios();
+  }
+
+  async onSubmit(): Promise<void> {
+    if (this.ngForm.invalid) return;
+    try {
+      const formData = this.ngForm.value;
+      const workout = this.crearWorkout(formData);
+      await this.registrarWorkout(workout);
+      this.ngForm.reset();
+      this.exercisesArray = [];
+    } catch (error) {
+      console.error('❌ Error:', error);
+    }
+  }
+
+  registrarEjercicio() {
+    if (this.ngExercForm.invalid) return;
+    const formData = this.ngExercForm.value;
+    const ejercicio = this.crearEjercicio(formData);
+    this.exercisesArray.push(ejercicio);
+    console.log('✅ Ejercicio añadido:', ejercicio);
+    this.ngExercForm.reset();
+  }
+
+  crearEjercicio(formData: any): any {
+    return {
+      "Nombre": formData.nombreEjercicio || '',
+      "Peso": formData.peso || 0,
+      "Progresivo": {
+        "Tipo": formData.progresivo || '',
+        "Variación": formData.variacion || ''
+      },
+      "Reps": formData.reps || 0,
+      "Series": formData.series || 0
+    };
+  }
+
+  crearWorkout(formData: any): any {
+    const fecha = formData.fechaPropuesta;
+    const timestampFecha = fecha ? Math.floor(new Date(fecha).getTime() / 1000) : Date.now();
+    return {
+      "Ejercicios": [...this.exercisesArray],
+      "Entrenador": this.trainerUid,
+      "Fecha": timestampFecha,
+      "Tiempo": formData.duracionPropuesta || 0
+    };
+  }
+
+  async registrarWorkout(workout: any) {
+    if (!this.clientUid) return;
+    const clientWorkoutRef = ref(this.db, `Usuarios/Clientes/${this.clientUid}/Workouts/Pendientes`);
+    try {
+      const newWorkoutRef = push(clientWorkoutRef);
+      const workoutToSave = {
+        ...workout,
+        id: newWorkoutRef.key
+      };
+      
+      await set(newWorkoutRef, workoutToSave);
+      console.log("✅ Workout agregado correctamente.");
+      
+      // Limpiar el array de ejercicios después de guardar
+      this.exercisesArray = [];
+    } catch (error) {
+      console.error("❌ Error al agregar Workout:", error);
+    }
+  }
 }

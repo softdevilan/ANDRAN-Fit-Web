@@ -1,1 +1,95 @@
-<p>register-workout works!</p>
+<div class="register-workout-form">
+    <h1>🏋️ Añadir Workout al cliente <span>{{ client.Nombre.Nombre }} {{ client.Nombre.Apellido1 }}</span></h1>
+
+    <form [formGroup]="ngForm" (ngSubmit)="onSubmit()">
+
+        <!-- Workout header -->
+        <div class="workout-header">
+
+            <!-- Fecha prevista -->
+            <div class="form-group">
+                <label for="workout-date">🗓️ *Fecha</label>
+                <input type="datetime-local" formControlName="fechaPropuesta">
+            </div>
+
+            <!-- Tiempo previsto -->
+            <div class="form-group">
+                <label for="estimated-duration">🕒 *Duración</label>
+                <input type="number" formControlName="duracionPropuesta" placeholder="ej. 60"
+                    class="estimated-duration">
+            </div>
+
+        </div>
+
+        <!-- Workout overview -->
+        <fieldset class="workouts-container" *ngIf="exercisesArray.length > 0">
+            <legend>
+                <h2>Resumen de Workout</h2>
+            </legend>
+
+            <div class="ejercicios-agregados">
+                <div *ngFor="let ejercicio of exercisesArray" class="ejercicio-agregado">
+                        <p class="nombre-ejercicio">- {{ ejercicio.Nombre }}</p>
+                        <p class="separator"> - </p>
+                        <p>{{ ejercicio.Series }} x {{ ejercicio.Reps }}</p>                
+                </div>
+            </div>
+
+            <button [disabled]="!ngForm.valid" type="submit" class="add-exercise-btn">Registrar workout</button>
+        </fieldset>
+
+    </form>
+
+    <form [formGroup]="ngExercForm" (ngSubmit)="registrarEjercicio()">
+        <!-- Add exercises to workout -->
+        <fieldset class="add-exercises">
+            <legend>
+                <h2>Añadir ejercicio</h2>
+            </legend>
+            <section class="exercise-header">
+                <select name="exercises-list" id="exercises-list" formControlName="nombreEjercicio">
+                    <option value="">- *Escoge un ejercicio -</option>
+                    <option value="{{ workout.Nombre }}" *ngFor="let workout of workoutsArray">
+                        {{ workout.Nombre }}
+                    </option>
+                </select>
+
+                <div class="form-group">
+                    <label for="reps">*Reps</label>
+                    <input type="number" class="reps" formControlName="reps" placeholder="ej. 15">
+                </div>
+
+                <div class="form-group">
+                    <label for="reps">*Series</label>
+                    <input type="number" class="series" formControlName="series" placeholder="ej. 3">
+                </div>
+            </section>
+
+            <section class="exercise-body">
+                <div class="form-group">
+                    <label for="peso">Peso (kg)</label>
+                    <input type="number" class="peso" formControlName="peso" placeholder="ej. 50">
+                </div>
+
+                <div class="form-group">
+                    <select name="progressive" id="progressive" formControlName="progresivo">
+                        <option value="">- Sin progresión -</option>
+                        <option value="Aumentar">Aumentar</option>
+                        <option value="Disminuir">Disminuir</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="variacion">Variación (kg)</label>
+                    <input type="number" class="variacion" placeholder="ej. 5">
+                </div>
+            </section>
+
+            <section class="exercise-bottom">
+                <textarea class="indicaciones" placeholder="(Opcional) Indicaciones adicionales para el cliente"
+                    formControlName="indicaciones"></textarea>
+                <button [disabled]="!ngExercForm.valid" type="submit" class="add-exercise-btn">Añadir ejercicio</button>
+            </section>
+        </fieldset>
+    </form>
+</div>

@@ -1,6 +1,6 @@
 
 .login-container{
-  width: 22.5rem;
+  width: 25rem;
   margin:0 auto;
   padding: 1.25rem 2rem;
 
@@ -14,7 +14,7 @@
   box-shadow: 2px 2px 15px rgba(172, 255, 47, 0.2);
 }
 
-.login-container h1{ margin: 0.5rem auto 0 auto; font-family: 'Funnel Display'; font-size: 2.5rem;}
+.login-container h1{ margin: 0.5rem auto 0 auto; font-family: 'Funnel Display'; font-size: 2.5rem; font-weight: 500;}
 .login-container h2{ 
   margin: 0 auto 1rem auto; 
   text-transform: uppercase; 
@@ -57,6 +57,7 @@
   border: solid 1px greenyellow;
   background-color: transparent;
 
+  text-transform: uppercase;
   color: greenyellow;
   font-weight: 600;
 

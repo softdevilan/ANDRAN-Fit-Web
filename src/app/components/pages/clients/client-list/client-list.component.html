@@ -17,28 +17,7 @@
             <h3>Stats</h3>
             </div> -->
     
-            <div class="next-workouts">
-                <h3>Próximos workouts</h3>
-    
-                <fieldset *ngFor="let workout of client.Workouts?.Pendientes" class="client-list-workout">
-                    <legend class="client-list-workout-top">
-                        <p class="workout-date">{{ workout.Fecha * 1000 | date:'dd/MM/yyyy - HH:mm' }}</p>
-                        <p class="separator"> - </p>
-                        <p class="workout-time">{{ workout.Tiempo }} mins</p>
-                    </legend>
-    
-                    <div *ngFor="let ejercicio of workout.Ejercicios" class="client-list-ejercicios">
-                        <p class="nombre-ejercicio">{{ ejercicio.Nombre }}</p>
-                        <p class="separator"> - </p>
-                        <p>{{ ejercicio.Series }} x {{ ejercicio.Reps }}</p>
-                    </div>
-                </fieldset>
-    
-                <div *ngIf="client.Workouts?.Pendientes == null" class="no-planned-workouts">
-                    <p>No hay workouts planificados</p>
-                </div>
-    
-            </div>
+            
         </a>
     </div>
 
@@ -78,6 +57,7 @@
                 </div>
     
             </div>
+
         </a>
     </div>
 </div>

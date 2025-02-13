@@ -1,0 +1,9 @@
+.footer-container{
+    display: flex;
+    justify-content: center;
+    padding: 1rem 0;
+}
+
+.footer-container span{ font-weight: 600; }
+
+.footer-container a{ color: greenyellow;}
