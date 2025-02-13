@@ -7,13 +7,13 @@ import { AuthService } from '../../../../services/auth.service';
 import { Database, ref, get, set } from '@angular/fire/database';
 
 @Component({
-  selector: 'app-client-list',
+  selector: 'app-your-client-list',
   imports: [CommonModule, RouterLink],
-  templateUrl: './client-list.component.html',
-  styleUrl: './client-list.component.css'
+  templateUrl: './your-client-list.component.html',
+  styleUrl: './your-client-list.component.css'
 })
 
-export class ClientListComponent implements OnInit, OnDestroy {
+export class YourClientListComponent implements OnInit, OnDestroy {
   uid: string | null = null;
   id: string | null = null;
 
@@ -21,7 +21,6 @@ export class ClientListComponent implements OnInit, OnDestroy {
   private routeSub!: Subscription;
   
   trainerClients: any[] = [];
-  allClients: any[] = [];
   user: any;
 
   constructor(private router: Router, private firebase: PseudoauthService, private authService: AuthService) {}
@@ -34,18 +33,14 @@ export class ClientListComponent implements OnInit, OnDestroy {
       if (snapshot.exists()) {
         const clientsData = snapshot.val();
         this.trainerClients = [];
-        this.allClients = [];
 
         Object.entries(clientsData).forEach(([clientUID, clientData]: any) => {
           if (clientData.Entrenadores && clientData.Entrenadores[this.uid!]) {
             this.trainerClients.push({ uid: clientUID, ...clientData });
-          } else {
-            this.allClients.push({ uid: clientUID, ...clientData });
-          }
+          } 
         });
 
         console.log("Clientes del entrenador:", this.trainerClients);
-        console.log("Todos los demás clientes:", this.allClients);
       } else {
         console.log("No hay clientes en la base de datos.");
       }
@@ -55,7 +50,7 @@ export class ClientListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log("📝ClientList inicializado");
+    console.log("📝RegisterClientComponent inicializado");
     
     const currentUrl = this.router.url;
     console.log("🔗 URL actual:", currentUrl);

@@ -5,6 +5,7 @@ import { RegisterWorkoutComponent } from './components/pages/forms/register-work
 import { WorkoutsComponent } from './components/pages/workouts/workouts.component';
 import { RegisterClientComponent } from './components/pages/forms/register-client/register-client.component';
 import { ClientListComponent } from './components/pages/clients/client-list/client-list.component';
+import { YourClientListComponent } from './components/pages/clients/your-client-list/your-client-list.component';
 import { ClientDetailsComponent } from './components/pages/clients/client-details/client-details.component';
 import { AuthGuard } from './guards/auth.guard';
 
@@ -16,7 +17,7 @@ export const routes: Routes = [
   { path: 'register-workout/:uid', component: RegisterWorkoutComponent },
   { path: 'register-client/:uid', component: RegisterClientComponent },
   { path: 'clients/:uid', component: ClientListComponent },
+  { path: 'your-clients/:uid', component: YourClientListComponent },
   { path: 'client/:uid/:id', component: ClientDetailsComponent },
-
   { path: '**', redirectTo: 'login' } // Página de error 404 que redirige al login
 ];

@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     const currentUrl = this.router.url;
     console.log("🔗 URL actual:", currentUrl);
   
-    const matches = currentUrl.match(/\/(?:home|clients|workouts|register-client)\/([^/]+)/);
+    const matches = currentUrl.match(/\/(?:home|clients|workouts|register-client|client)\/([^/]+)/);
     this.uid = matches ? matches[1] : null;
     console.log("🆔 UID extraído:", this.uid);
   
@@ -36,7 +36,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         console.log("🚀 Evento NavigationEnd detectado!");
         const updatedUrl = this.router.url;
         console.log("🔗 URL tras NavigationEnd:", updatedUrl);
-        const newMatches = updatedUrl.match(/\/(?:home|clients|workouts|register-client)\/([^/]+)/);
+        const newMatches = updatedUrl.match(/\/(?:home|clients|workouts|register-client|client)\/([^/]+)/);
         return newMatches ? newMatches[1] : null;
       })
     ).subscribe(uid => {

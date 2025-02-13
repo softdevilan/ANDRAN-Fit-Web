@@ -89,51 +89,12 @@ main{ background-color: black; }
 .trainer-name{ font-weight: 700; color: greenyellow; font-size: 2.75rem;}
 
 #homepage h1{ font-weight: 400; }
-#homepage h2{ padding: 0.25rem 0; border-bottom: solid 1px white; }
+#homepage h2{ padding: 0.25rem 0; border-bottom: solid 1px white; padding-bottom: 0.5rem;}
 #homepage .clients-container{ padding: 0.5rem 0 }
 
 /* Clients */
-.client-container{
-    min-height: fit-content;
 
-    display: flex;
-    gap: 0.25rem;
-    justify-content: space-between;
-    align-items: center;
-
-    padding: 0.75rem;
-    margin: 1rem 0;
-
-    background-color: rgb(20, 20, 20);
-    border: solid 1px rgb(39, 39, 39);
-
-    transition: ease all 175ms;
-}
-
-.client-container:hover {
-    background-color: rgb(16, 24, 12);
-    border: solid 1px rgba(172, 255, 47, 0.25);
-    color: greenyellow;
-}
-
-.new-client-btn button{
-    padding: 0.3rem;
-
-    background-color: transparent;
-    border: solid 1px greenyellow;
-
-    color: greenyellow;
-    font-weight: 600;
-
-    transition: ease all 205ms;
-}
-
-.new-client-btn button:hover{
-    background-color: greenyellow;
-
-    color: black;
-    cursor: pointer;
-}
+/* Register client */
 
 .register-client-form{
     width: 100%;
@@ -250,15 +211,57 @@ main{ background-color: black; }
 .contact-info .email input{ width: 12rem; }
 
 /* Client list */
+#client-list h2, #your-client-list h2{ font-family: 'Funnel Display'; margin-top: 1.25rem; border-bottom: solid 1px white; padding-bottom: 0.5rem;}
+
+#your-client-list{ margin-top: 1rem; }
 .client-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(26rem, 100%), 1fr));
     gap: 0.5rem;
 
     margin: 0.75rem 0;
-  }
+}
 
-.client-container{ display: flex; justify-content: space-between; align-items: stretch; margin: 0;}
+.client-container{
+    min-height: fit-content;
+
+    display: flex;
+    gap: 0.25rem;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 1rem;
+
+    background-color: rgb(20, 20, 20);
+    border: solid 1px rgb(39, 39, 39);
+
+    transition: ease all 175ms;
+}
+
+.client-container:hover {
+    background-color: rgb(16, 24, 12);
+    border: solid 1px rgba(172, 255, 47, 0.25);
+    color: greenyellow;
+}
+
+.new-client-btn button{
+    padding: 0.3rem;
+
+    background-color: transparent;
+    border: solid 1px greenyellow;
+
+    color: greenyellow;
+    font-weight: 600;
+
+    transition: ease all 205ms;
+}
+
+.new-client-btn button:hover{
+    background-color: greenyellow;
+
+    color: black;
+    cursor: pointer;
+}
 
 .client-info { display: flex; flex-direction: column; justify-content: space-evenly;}
 .client-since{ margin-top: 0.5rem; font-size: 0.8rem; color: rgb(124, 177, 45);}
@@ -274,7 +277,13 @@ main{ background-color: black; }
 
 .client-list-workout{
     padding: 0.5rem;
-    background-color: rgb(17, 17, 17);
+    background-color: rgb(33, 33, 33);
+
+    border: solid 1px rgb(172, 255, 47, 0.25);
+}
+
+#your-client-list .client-list-workout{
+    padding: 0.3rem;
 }
 
 .workout-date{ font-weight: 600; }

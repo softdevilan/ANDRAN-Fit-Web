@@ -3,12 +3,14 @@
         <button>Registrar nuevo cliente</button>
     </a>
     
+    <!-- your clients -->
+    <h2>Tus clientes</h2>
     <div class="client-grid">
-        <a *ngFor="let client of trainerClients" class="client-container" [routerLink]="['/client-info', uid, client.uid]"
+        <a *ngFor="let client of trainerClients" class="client-container" [routerLink]="['/client', uid, client.uid]"
             class="client-container">
             <div class="client-info">
                 <h3>{{ client.Nombre.Nombre }} {{ client.Nombre.Apellido1 }}</h3>
-                <p class="client-since">Cliente desde: {{ client.Registro }}</p>
+                <p class="client-since">Cliente desde: {{ client.Registro * 1000 | date:'dd/MM/yyyy' }}</p>
             </div>
     
             <!--     <div class="client-stats">
@@ -20,7 +22,46 @@
     
                 <fieldset *ngFor="let workout of client.Workouts?.Pendientes" class="client-list-workout">
                     <legend class="client-list-workout-top">
-                        <p class="workout-date">{{ workout.Fecha }}</p>
+                        <p class="workout-date">{{ workout.Fecha * 1000 | date:'dd/MM/yyyy - HH:mm' }}</p>
+                        <p class="separator"> - </p>
+                        <p class="workout-time">{{ workout.Tiempo }} mins</p>
+                    </legend>
+    
+                    <div *ngFor="let ejercicio of workout.Ejercicios" class="client-list-ejercicios">
+                        <p class="nombre-ejercicio">{{ ejercicio.Nombre }}</p>
+                        <p class="separator"> - </p>
+                        <p>{{ ejercicio.Series }} x {{ ejercicio.Reps }}</p>
+                    </div>
+                </fieldset>
+    
+                <div *ngIf="client.Workouts?.Pendientes == null" class="no-planned-workouts">
+                    <p>No hay workouts planificados</p>
+                </div>
+    
+            </div>
+        </a>
+    </div>
+
+    <!-- Other clients -->
+    <h2>Otros clientes</h2>
+    <div class="client-grid">
+        <a *ngFor="let client of allClients" class="client-container" [routerLink]="['/client', uid, client.uid]"
+            class="client-container">
+            <div class="client-info">
+                <h3>{{ client.Nombre.Nombre }} {{ client.Nombre.Apellido1 }}</h3>
+                <p class="client-since">Cliente desde: {{ client.Registro * 1000 | date:'dd/MM/yyyy' }}</p>
+            </div>
+    
+            <!--     <div class="client-stats">
+            <h3>Stats</h3>
+            </div> -->
+    
+            <div class="next-workouts">
+                <h3>Próximos workouts</h3>
+    
+                <fieldset *ngFor="let workout of client.Workouts?.Pendientes" class="client-list-workout">
+                    <legend class="client-list-workout-top">
+                        <p class="workout-date">{{ workout.Fecha * 1000 | date:'dd/MM/yyyy - HH:mm' }}</p>
                         <p class="separator"> - </p>
                         <p class="workout-time">{{ workout.Tiempo }} mins</p>
                     </legend>

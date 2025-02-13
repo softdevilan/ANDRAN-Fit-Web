@@ -3,13 +3,13 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { filter, map, Subscription } from 'rxjs';
 import { ClientListComponent } from '../clients/client-list/client-list.component';
+import { YourClientListComponent } from '../clients/your-client-list/your-client-list.component';
 import { SidebarComponent } from '../../layout/sidebar/sidebar.component';
 import { PseudoauthService } from '../../../services/pseudoauth.service';
 import { AuthService } from '../../../services/auth.service';
-
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, RouterLink, ClientListComponent, SidebarComponent],
+  imports: [CommonModule, RouterLink, YourClientListComponent, SidebarComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
