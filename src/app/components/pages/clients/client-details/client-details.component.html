@@ -24,57 +24,63 @@
                 <h3>Mediciones</h3>
                 <p class="altura"><span>Altura: </span>{{ client.Mediciones.Actual.Altura }} cm</p>
                 <p class="peso"><span>Peso: </span>{{ client.Mediciones.Actual.Peso }} kg</p>
-                <p *ngIf="client.Mediciones.Actual.Grasa" class="grasa"><span>%GC: </span>{{ client.Mediciones.Actual.Grasa }}%</p>
+                <p *ngIf="client.Mediciones.Actual.Grasa" class="grasa"><span>%GC: </span>{{
+                    client.Mediciones.Actual.Grasa }}%</p>
             </div>
         </section>
 
         <!-- Workouts -->
+        <h2>Workouts</h2>
+        <div class="add-workout">
+            <button [routerLink]="['/register-workout', trainerUid, clientUid]">Añadir entrenamiento</button>
+        </div>
+
         <section class="client-workouts">
             <div class="next-workouts">
-                <h3>Próximos workouts</h3>  
+                <h3>Próximos workouts</h3>
                 <fieldset *ngFor="let workout of client.Workouts?.Pendientes" class="client-list-workout">
                     <legend class="client-list-workout-top">
                         <p class="workout-date">{{ workout.Fecha * 1000 | date:'dd/MM/yyyy - HH:mm' }}</p>
                         <p class="separator"> - </p>
                         <p class="workout-time">{{ workout.Tiempo }} mins</p>
                     </legend>
-    
+
                     <div *ngFor="let ejercicio of workout.Ejercicios" class="client-list-ejercicios">
                         <p class="nombre-ejercicio">{{ ejercicio.Nombre }}</p>
                         <p class="separator"> - </p>
                         <p>{{ ejercicio.Series }} x {{ ejercicio.Reps }}</p>
                     </div>
                 </fieldset>
-    
+
                 <div *ngIf="client.Workouts?.Pendientes == null" class="no-planned-workouts">
                     <p>No hay workouts planificados</p>
                 </div>
-    
+
             </div>
         </section>
 
         <!-- Past workouts -->
         <section class="client-workouts">
             <div class="next-workouts">
-                <h3>Pasados workouts</h3>  
-                <fieldset *ngFor="let workout of client.Workouts?.Pendientes" class="client-list-workout">
+                <h3>Pasados workouts</h3>
+                <fieldset *ngFor="let workout of client.Workouts?.Completados" class="client-list-workout"
+                    class="client-list-workout">
                     <legend class="client-list-workout-top">
                         <p class="workout-date">{{ workout.Fecha * 1000 | date:'dd/MM/yyyy - HH:mm' }}</p>
                         <p class="separator"> - </p>
                         <p class="workout-time">{{ workout.Tiempo }} mins</p>
                     </legend>
-    
+
                     <div *ngFor="let ejercicio of workout.Ejercicios" class="client-list-ejercicios">
                         <p class="nombre-ejercicio">{{ ejercicio.Nombre }}</p>
                         <p class="separator"> - </p>
                         <p>{{ ejercicio.Series }} x {{ ejercicio.Reps }}</p>
                     </div>
                 </fieldset>
-    
-                <div *ngIf="client.Workouts?.Pendientes == null" class="no-planned-workouts">
+
+                <div *ngIf="client.Workouts?.Completados == null" class="no-planned-workouts">
                     <p>No hay registro de workouts</p>
                 </div>
-    
             </div>
         </section>
 

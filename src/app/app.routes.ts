@@ -14,7 +14,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent }, // Protegida para evitar acceso si ya está autenticado , canActivate: [AuthGuard]
   { path: 'workouts/:uid', component: WorkoutsComponent },
   { path: 'home/:uid', component: HomeComponent }, // Protegida 
-  { path: 'register-workout/:uid', component: RegisterWorkoutComponent },
+  { path: 'register-workout/:uid/:id', component: RegisterWorkoutComponent },
   { path: 'register-client/:uid', component: RegisterClientComponent },
   { path: 'clients/:uid', component: ClientListComponent },
   { path: 'your-clients/:uid', component: YourClientListComponent },

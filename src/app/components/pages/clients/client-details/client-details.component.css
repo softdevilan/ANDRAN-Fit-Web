@@ -3,8 +3,11 @@
     margin: 0 auto;
 }
 
-#client-info h1{
+#client-info h1, #client-info h2{
     font-family: 'Funnel Display';
+}
+
+#client-info h1{
     margin: 1rem auto 2rem auto;
     padding-bottom: 1rem;
     text-align: center;
@@ -70,4 +73,23 @@
     border: solid 1px rgb(39, 39, 39);
 
     padding: 1rem;
+}
+
+.add-workout button{
+    text-transform: uppercase;
+    padding: 0.5rem;
+
+    color: greenyellow;
+    font-weight: 600;
+
+    transition: ease all 205ms;
+
+    background-color: transparent;
+    border: solid 1px greenyellow;
+}
+    
+.add-workout button:hover{
+    background-color: greenyellow;
+    color: black;
+    cursor: pointer;
 }

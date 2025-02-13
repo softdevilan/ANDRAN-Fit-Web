@@ -22,6 +22,7 @@ export class ClientDetailsComponent {
   private routeSub!: Subscription;
 
   client: any = null;
+  WorkoutsArray: any[] = [];
 
   constructor(private router: Router, private firebase: PseudoauthService, private authService: AuthService) {}
   
@@ -31,6 +32,7 @@ export class ClientDetailsComponent {
       const snapshot = await get(clientRef);
       if (snapshot.exists()) {
         this.client = snapshot.val();
+        this.client.WorkoutsArray = Object.values(this.client.Workouts);
         console.log("✅ Datos del cliente obtenidos:", this.client);
       } else {
         console.log("⚠️ Cliente no encontrado en la base de datos.");
@@ -73,7 +75,7 @@ export class ClientDetailsComponent {
         console.log("🔗 URL tras NavigationEnd:", updatedUrl);
   
         // Vuelve a extraer los UIDs tras la navegación
-        const newMatches = updatedUrl.match(/\/client-info\/([^/]+)\/([^/]+)/);
+        const newMatches = updatedUrl.match(/\/client\/([^/]+)\/([^/]+)/);
         return newMatches ? { trainerUid: newMatches[1], clientUid: newMatches[2] } : null;
       })
     ).subscribe(data => {
