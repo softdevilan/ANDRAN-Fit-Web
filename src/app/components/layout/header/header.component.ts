@@ -11,9 +11,9 @@ import { AuthService } from '../../../services/auth.service';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-
 export class HeaderComponent implements OnInit, OnDestroy {
   uid: string | null = null;
+  selectedTab: 'home' | 'clients' = 'clients'; // Estado para saber qué pestaña está seleccionada
   private routeSub!: Subscription;
   trainerName: any;
   user: any;
@@ -22,30 +22,29 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     console.log("🏠 Header inicializado");
-    
-    const currentUrl = this.router.url;
-    console.log("🔗 URL actual:", currentUrl);
-  
-    const matches = currentUrl.match(/\/(?:home|clients|workouts|register-client|client|register-workout)\/([^/]+)/);
-    this.uid = matches ? matches[1] : null;
-    console.log("🆔 UID extraído:", this.uid);
-  
+
+    this.updateSelectedTab(this.router.url);
+
     this.routeSub = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
-      map(() => {
-        console.log("🚀 Evento NavigationEnd detectado!");
-        const updatedUrl = this.router.url;
-        console.log("🔗 URL tras NavigationEnd:", updatedUrl);
-        const newMatches = updatedUrl.match(/\/(?:home|clients|workouts|register-client|client|register-workout)\/([^/]+)/);
-        return newMatches ? newMatches[1] : null;
-      })
-    ).subscribe(uid => {
-      this.uid = uid;
-      console.log("✅ UID asignado en HeaderComponent:", this.uid);
+      map(() => this.router.url)
+    ).subscribe(url => {
+      this.updateSelectedTab(url);
     });
 
     this.user = this.authService.getCurrentUser();
     console.log(this.user);
+  }
+
+  updateSelectedTab(url: string): void {
+    this.uid = this.extractUid(url);
+    this.selectedTab = url.includes('/home') ? 'home' : 'clients';
+    console.log(`🔍 Pestaña seleccionada: ${this.selectedTab}`);
+  }
+
+  extractUid(url: string): string | null {
+    const matches = url.match(/\/(?:home|clients|workouts|register-client|client|register-workout)\/([^/]+)/);
+    return matches ? matches[1] : null;
   }
 
   ngOnDestroy(): void {

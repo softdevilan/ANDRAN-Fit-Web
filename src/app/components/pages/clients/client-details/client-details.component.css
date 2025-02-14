@@ -42,8 +42,11 @@
     margin: 0 auto;
     padding: 1rem 0;
 
-    background-color: rgb(20, 20, 20);
+    background-color: rgba(20, 20, 20, 0.5); /* Fondo semi-transparente */
     border: solid 1px rgb(39, 39, 39);
+
+    backdrop-filter: blur(2px); /* 💫 Aplica el desenfoque */
+    -webkit-backdrop-filter: blur(10px); /* Compatibilidad con Safari */
 }
 
 #client-info h3{ margin-bottom: 1rem; }
@@ -69,8 +72,11 @@
 .client-workouts{
 
     min-width: fit-content;
-    background-color: rgb(20, 20, 20);
+    background-color: rgba(20, 20, 20, 0.5); /* Fondo semi-transparente */
     border: solid 1px rgb(39, 39, 39);
+
+    backdrop-filter: blur(2px); /* 💫 Aplica el desenfoque */
+    -webkit-backdrop-filter: blur(10px); /* Compatibilidad con Safari */
 
     padding: 1rem;
 }

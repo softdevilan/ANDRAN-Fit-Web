@@ -4,8 +4,11 @@
   margin:0 auto;
   padding: 1.25rem 2rem;
 
-  background-color: rgb(20, 20, 20);
+  background-color: rgba(20, 20, 20, 0.5); /* Fondo semi-transparente */
   border: solid 1px rgb(39, 39, 39);
+  
+  backdrop-filter: blur(2px); /* 💫 Aplica el desenfoque */
+  -webkit-backdrop-filter: blur(10px); /* Compatibilidad con Safari */
 
   transition: ease all 200ms;
 }

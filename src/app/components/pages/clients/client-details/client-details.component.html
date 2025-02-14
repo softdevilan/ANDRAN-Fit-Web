@@ -1,6 +1,6 @@
 <div id="client-info">
 
-    <h1>Información del cliente</h1>
+    <h1>📌 Información del cliente</h1>
 
     <div class="client-info-grid">
 
@@ -15,13 +15,13 @@
             </div>
 
             <div class="general-data">
-                <h3>Datos generales</h3>
+                <h3>📋 Datos generales</h3>
                 <p class="sexo"><span>Sexo: </span>{{ client.Sexo }}</p>
                 <p class="edad"><span>{{ edad }} años</span></p>
             </div>
 
             <div class="mediciones">
-                <h3>Mediciones</h3>
+                <h3>📊 Mediciones</h3>
                 <p class="altura"><span>Altura: </span>{{ client.Mediciones.Actual.Altura }} cm</p>
                 <p class="peso"><span>Peso: </span>{{ client.Mediciones.Actual.Peso }} kg</p>
                 <p *ngIf="client.Mediciones.Actual.Grasa" class="grasa"><span>%GC: </span>{{
@@ -30,14 +30,14 @@
         </section>
 
         <!-- Workouts -->
-        <h2>Workouts</h2>
+        <h2>🤸 Workouts</h2>
         <div class="add-workout">
             <button [routerLink]="['/register-workout', trainerUid, clientUid]">Añadir entrenamiento</button>
         </div>
 
         <section class="client-workouts">
             <div class="next-workouts">
-                <h3>Próximos workouts</h3>
+                <h3>⏭️ Próximos workouts</h3>
                 <fieldset *ngFor="let workout of client.WorkoutsArray" class="client-list-workout">
                     <legend class="client-list-workout-top">
                         <p class="workout-date">{{ workout.Fecha * 1000 | date:'dd/MM/yyyy - HH:mm' }}</p>
@@ -62,7 +62,7 @@
         <!-- Past workouts -->
         <section class="client-workouts">
             <div class="next-workouts">
-                <h3>Pasados workouts</h3>
+                <h3>🔙 Pasados workouts</h3>
                 <fieldset *ngFor="let workout of client.CompletedWorkoutsArray" class="client-list-workout"
                     class="client-list-workout">
                     <legend class="client-list-workout-top">

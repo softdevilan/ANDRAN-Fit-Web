@@ -1,6 +1,6 @@
 <div id="client-list">
     <a [routerLink]="['/register-client', uid]" class="new-client-btn">
-        <button>Registrar nuevo cliente</button>
+        <button class="register-client-btn">Registrar nuevo cliente</button>
     </a>
     
     <!-- your clients -->
@@ -18,7 +18,7 @@
             </div> -->
     
             <div class="next-workouts">
-                <h3>Próximos workouts</h3>
+                <h3>⏭️ Próximos workouts</h3>
     
                 <fieldset *ngFor="let workout of client.Workouts?.Pendientes" class="client-list-workout">
                     <legend class="client-list-workout-top">
@@ -58,7 +58,7 @@
             </div> -->
     
             <div class="next-workouts">
-                <h3>Próximos workouts</h3>
+                <h3>⏭️ Próximos workouts</h3>
     
                 <fieldset *ngFor="let workout of client.Workouts?.Pendientes" class="client-list-workout">
                     <legend class="client-list-workout-top">

@@ -41,12 +41,16 @@ export class ClientListComponent implements OnInit, OnDestroy {
           var WorkoutsPendientes = [];
 
           if (clientData.Entrenadores && clientData.Entrenadores[this.uid!]) {          
-            WorkoutsPendientes = Object.values(client.Workouts.Pendientes);
-            client.Workouts.Pendientes = WorkoutsPendientes;
+            if(client.Workouts && client.Workouts.Pendientes){
+              WorkoutsPendientes = Object.values(client.Workouts.Pendientes);
+              client.Workouts.Pendientes = WorkoutsPendientes;
+            }
             this.trainerClients.push({ uid: clientUID, ...client });
           } else {
-            WorkoutsPendientes = Object.values(client.Workouts.Pendientes);
-            client.Workouts.Pendientes = WorkoutsPendientes;
+            if(client.Workouts && client.Workouts.Pendientes){
+              WorkoutsPendientes = Object.values(client.Workouts.Pendientes);
+              client.Workouts.Pendientes = WorkoutsPendientes;
+            }
             this.allClients.push({ uid: clientUID, ...client });
           }
         });

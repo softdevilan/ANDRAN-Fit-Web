@@ -1,7 +1,9 @@
-*{ font-family: 'Space Grotesk' }
+*{ font-family: 'Funnel Display' }
 
 .header-login{
     width: 100%;
     display: flex;
     justify-content: center;
 }
+
+.selected{ color: greenyellow; }
