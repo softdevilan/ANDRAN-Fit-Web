@@ -22,23 +22,41 @@ export class ClientDetailsComponent {
   private routeSub!: Subscription;
 
   client: any = null;
+  edad: number = 0;
   WorkoutsArray: any[] = [];
+  CompletedWorkoutsArray: any[] = [];
 
   constructor(private router: Router, private firebase: PseudoauthService, private authService: AuthService) {}
   
   async obtenerCliente(){
     const clientRef = ref(this.db, `Usuarios/Clientes/${this.clientUid}`);
     try {
-      const snapshot = await get(clientRef);
-      if (snapshot.exists()) {
-        this.client = snapshot.val();
-        this.client.WorkoutsArray = Object.values(this.client.Workouts);
-        console.log("✅ Datos del cliente obtenidos:", this.client);
-      } else {
-        console.log("⚠️ Cliente no encontrado en la base de datos.");
-      }
+        const snapshot = await get(clientRef);
+        if (snapshot.exists()) {
+            this.client = snapshot.val();
+
+            const timestampActual = Math.floor(Date.now() / 1000);
+            const edadSegundos = timestampActual - this.client.FechaNacimiento; // Diferencia en segundos
+            this.edad = Math.floor(edadSegundos / (60 * 60 * 24 * 365.25)); // Convertir a años
+
+            // Convertir Pendientes a array si existe
+            if (this.client.Workouts) {
+
+              if(this.client.Workouts.Pendientes){
+                this.client.WorkoutsArray = Object.values(this.client.Workouts.Pendientes);
+              }
+
+              if(this.client.Workouts.Completados){
+                this.client.CompletedWorkoutsArray = Object.values(this.client.Workouts.Completados);               
+              }            
+
+            }
+            console.log("✅ Datos del cliente obtenidos:", this.client);
+        } else {
+            console.log("⚠️ Cliente no encontrado en la base de datos.");
+        }
     } catch (error) {
-      console.error("❌ Error obteniendo datos del cliente:", error);
+        console.error("❌ Error obteniendo datos del cliente:", error);
     }
   }
 

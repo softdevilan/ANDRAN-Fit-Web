@@ -111,7 +111,7 @@ export class RegisterClientComponent {
                 "Desde": timestampActual
               }
             } : [],
-            "Fecha nacimiento": timestampNacimiento,
+            "FechaNacimiento": timestampNacimiento,
             "Mediciones": {
                 "Actual": {
                     "Altura": formData.altura || 0,

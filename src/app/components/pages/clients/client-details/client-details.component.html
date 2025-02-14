@@ -17,7 +17,7 @@
             <div class="general-data">
                 <h3>Datos generales</h3>
                 <p class="sexo"><span>Sexo: </span>{{ client.Sexo }}</p>
-                <p class="edad"><span>Edad años</span></p>
+                <p class="edad"><span>{{ edad }} años</span></p>
             </div>
 
             <div class="mediciones">
@@ -38,7 +38,7 @@
         <section class="client-workouts">
             <div class="next-workouts">
                 <h3>Próximos workouts</h3>
-                <fieldset *ngFor="let workout of client.Workouts?.Pendientes" class="client-list-workout">
+                <fieldset *ngFor="let workout of client.WorkoutsArray" class="client-list-workout">
                     <legend class="client-list-workout-top">
                         <p class="workout-date">{{ workout.Fecha * 1000 | date:'dd/MM/yyyy - HH:mm' }}</p>
                         <p class="separator"> - </p>
@@ -63,7 +63,7 @@
         <section class="client-workouts">
             <div class="next-workouts">
                 <h3>Pasados workouts</h3>
-                <fieldset *ngFor="let workout of client.Workouts?.Completados" class="client-list-workout"
+                <fieldset *ngFor="let workout of client.CompletedWorkoutsArray" class="client-list-workout"
                     class="client-list-workout">
                     <legend class="client-list-workout-top">
                         <p class="workout-date">{{ workout.Fecha * 1000 | date:'dd/MM/yyyy - HH:mm' }}</p>

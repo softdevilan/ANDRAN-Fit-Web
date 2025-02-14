@@ -93,3 +93,19 @@
     color: black;
     cursor: pointer;
 }
+
+@media (max-width: 768px) {
+
+    .client-info-grid{
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .client-info-grid h2{ margin-top: 1rem; }
+
+    .client-overview{ gap:0.2rem }
+
+    .general-data{padding-left: 0.5rem;}
+
+}

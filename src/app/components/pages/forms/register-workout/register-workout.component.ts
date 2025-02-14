@@ -99,7 +99,7 @@ export class RegisterWorkoutComponent {
     if (this.ngExercForm.invalid) return;
     const formData = this.ngExercForm.value;
     const ejercicio = this.crearEjercicio(formData);
-    this.exercisesArray.push(ejercicio);
+    this.exercisesArray.push(ejercicio);  
     console.log('✅ Ejercicio añadido:', ejercicio);
     this.ngExercForm.reset();
   }
@@ -131,20 +131,19 @@ export class RegisterWorkoutComponent {
   async registrarWorkout(workout: any) {
     if (!this.clientUid) return;
     const clientWorkoutRef = ref(this.db, `Usuarios/Clientes/${this.clientUid}/Workouts/Pendientes`);
+
     try {
-      const newWorkoutRef = push(clientWorkoutRef);
-      const workoutToSave = {
-        ...workout,
-        id: newWorkoutRef.key
-      };
-      
-      await set(newWorkoutRef, workoutToSave);
-      console.log("✅ Workout agregado correctamente.");
-      
-      // Limpiar el array de ejercicios después de guardar
-      this.exercisesArray = [];
+        const newWorkoutRef = push(clientWorkoutRef);
+        const workoutToSave = {
+            ...workout,
+            id: newWorkoutRef.key
+        };
+        
+        await set(newWorkoutRef, workoutToSave);
+        console.log("✅ Workout agregado correctamente.");
+        this.exercisesArray = [];
     } catch (error) {
-      console.error("❌ Error al agregar Workout:", error);
+        console.error("❌ Error al agregar Workout:", error);
     }
   }
 }

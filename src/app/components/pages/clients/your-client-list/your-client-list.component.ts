@@ -35,8 +35,13 @@ export class YourClientListComponent implements OnInit, OnDestroy {
         this.trainerClients = [];
 
         Object.entries(clientsData).forEach(([clientUID, clientData]: any) => {
+          var client = clientData;
+          var WorkoutsPendientes = [];
+          
           if (clientData.Entrenadores && clientData.Entrenadores[this.uid!]) {
-            this.trainerClients.push({ uid: clientUID, ...clientData });
+            WorkoutsPendientes = Object.values(client.Workouts.Pendientes);
+            client.Workouts.Pendientes = WorkoutsPendientes;
+            this.trainerClients.push({ uid: clientUID, ...client });
           } 
         });
 

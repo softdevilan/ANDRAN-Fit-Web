@@ -1,4 +1,4 @@
-<nav class="navbar">
+<nav class="navbar" *ngIf="uid">
 
     <a [routerLink]="['/home', uid]" class="logo-container"><img src="images/logo.png" alt="Logo ANDRAN Fit"></a>
 
@@ -12,5 +12,9 @@
         </a></li>
     </ul>
 
-    <div class="logout-container"><button [routerLink]="['/login']" *ngIf="uid">Logout</button></div>
+    <div class="logout-container"><button [routerLink]="['/login']">Logout</button></div>
 </nav>
+
+<div *ngIf="!uid" class="header-login">
+    <div class="logo-container"><img src="images/logo.png" alt="Logo ANDRAN Fit"></div>  
+</div>

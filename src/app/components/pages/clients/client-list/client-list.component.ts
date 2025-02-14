@@ -37,14 +37,22 @@ export class ClientListComponent implements OnInit, OnDestroy {
         this.allClients = [];
 
         Object.entries(clientsData).forEach(([clientUID, clientData]: any) => {
-          if (clientData.Entrenadores && clientData.Entrenadores[this.uid!]) {
-            this.trainerClients.push({ uid: clientUID, ...clientData });
+          var client = clientData;
+          var WorkoutsPendientes = [];
+
+          if (clientData.Entrenadores && clientData.Entrenadores[this.uid!]) {          
+            WorkoutsPendientes = Object.values(client.Workouts.Pendientes);
+            client.Workouts.Pendientes = WorkoutsPendientes;
+            this.trainerClients.push({ uid: clientUID, ...client });
           } else {
-            this.allClients.push({ uid: clientUID, ...clientData });
+            WorkoutsPendientes = Object.values(client.Workouts.Pendientes);
+            client.Workouts.Pendientes = WorkoutsPendientes;
+            this.allClients.push({ uid: clientUID, ...client });
           }
         });
 
         console.log("Clientes del entrenador:", this.trainerClients);
+
         console.log("Todos los demás clientes:", this.allClients);
       } else {
         console.log("No hay clientes en la base de datos.");
