@@ -17,9 +17,6 @@
       </div>
 
       <div class="error-message">
-        <!-- Verificación e-mail requerido -->
-        <p *ngIf="email?.errors?.['required']">El email es requerido</p>
-
         <!-- Verificación e-mail válido -->
         <p *ngIf="email?.errors?.['email']">Por favor ingresa un email válido</p>
 
@@ -34,14 +31,15 @@
           [ngClass]="{ 'error': password?.invalid && (password?.dirty || password?.touched) }">
       </div>
       <div class="error-message">
-
-        <!-- Verificación contraseña requerida -->
-        <p *ngIf="password?.errors?.['required']">La contraseña es requerida</p>
-
         <!-- Verificación contraseña válida -->
         <p *ngIf="password?.errors?.['minlength']">La contraseña debe tener al menos 6 caracteres</p>
 
       </div>
+    </div>
+
+    <!-- Mensaje de error -->
+    <div *ngIf="loginError" class="error-message">
+      <p>{{ loginError }}</p>
     </div>
 
     <!-- button -->

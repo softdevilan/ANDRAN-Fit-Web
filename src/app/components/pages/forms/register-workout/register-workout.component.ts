@@ -89,6 +89,7 @@ export class RegisterWorkoutComponent {
       const workout = this.crearWorkout(formData);
       await this.registrarWorkout(workout);
       this.ngForm.reset();
+      alert('✅ Workout agregado correctamente.');
       this.exercisesArray = [];
     } catch (error) {
       console.error('❌ Error:', error);

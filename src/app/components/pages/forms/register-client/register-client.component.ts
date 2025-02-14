@@ -233,11 +233,15 @@ export class RegisterClientComponent {
             // Limpiar el formulario después de un registro exitoso
             this.ngForm.reset();
 
+            alert('Cliente registrado con éxito.');
             //this.router.navigate(['/home', uid]);
             
         } catch (error) {
             console.error('Error durante el proceso:', error);
         }
+    } else {
+      // Inform the user that the form is invalid
+      alert('Por favor, complete todos los campos requeridos antes de enviar el formulario.');
     }
   }
 
