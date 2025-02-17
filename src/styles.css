@@ -15,10 +15,10 @@
     position: absolute;
     width: 300px;
     height: 300px;
-    background: radial-gradient(circle, rgba(80, 255, 61, 0.02) 5%, rgba(0, 0, 0, 0) 70%);
+    background: radial-gradient(circle, rgba(80, 255, 61, 0.03) 5%, rgba(0, 0, 0, 0) 70%);
     pointer-events: none;
     border-radius: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -80%);
     transition: transform 0.05s linear;
     
     /* Agregar clip-path */
@@ -39,10 +39,10 @@ body {
     margin: 0; color: white;
     background-color: black;
     background-image: 
-        radial-gradient(circle, rgba(170, 255, 106, 0.025) 0%, rgba(0, 0, 0, 0) 30%), /* Luz en el centro */
+        radial-gradient(circle, rgba(170, 255, 106, 0.03) 0%, rgba(0, 0, 0, 0) 30%), /* Luz en el centro */
         radial-gradient(circle, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 1) 100%), /* Viñeta oscura */
         linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
     background-size: 100% 100%, 100% 100%, 20px 20px, 20px 20px;
     background-position: center;
 }
