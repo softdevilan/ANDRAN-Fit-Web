@@ -29,9 +29,9 @@
 
             <div class="ejercicios-agregados">
                 <div *ngFor="let ejercicio of exercisesArray" class="ejercicio-agregado">
-                        <p class="nombre-ejercicio">- {{ ejercicio.Nombre }}</p>
+                        <p class="nombre-ejercicio">- {{ ejercicio.nombre }}</p>
                         <p class="separator"> - </p>
-                        <p>{{ ejercicio.Series }} x {{ ejercicio.Reps }}</p>                
+                        <p>{{ ejercicio.series }} x {{ ejercicio.reps }}</p>                
                 </div>
             </div>
 
@@ -60,7 +60,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="reps">*Series</label>
+                    <label for="series">*Series</label>
                     <input type="number" class="series" formControlName="series" placeholder="ej. 3">
                 </div>
             </section>
@@ -74,8 +74,8 @@
                 <div class="form-group">
                     <select name="progressive" id="progressive" formControlName="progresivo">
                         <option value="">- Sin progresión -</option>
-                        <option value="Aumentar">Aumentar</option>
-                        <option value="Disminuir">Disminuir</option>
+                        <option value="aumentar">Aumentar</option>
+                        <option value="disminuir">Disminuir</option>
                     </select>
                 </div>
 

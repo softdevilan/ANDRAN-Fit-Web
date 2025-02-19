@@ -107,14 +107,14 @@ export class RegisterWorkoutComponent {
 
   crearEjercicio(formData: any): any {
     return {
-      "Nombre": formData.nombreEjercicio || '',
-      "Peso": formData.peso || 0,
-      "Progresivo": {
-        "Tipo": formData.progresivo || '',
-        "Variación": formData.variacion || ''
+      "nombre": formData.nombreEjercicio || '',
+      "peso": formData.peso || 0,
+      "progresivo": {
+        "tipo": formData.progresivo || '',
+        "variación": formData.variacion || ''
       },
-      "Reps": formData.reps || 0,
-      "Series": formData.series || 0
+      "reps": formData.reps || 0,
+      "series": formData.series || 0
     };
   }
 
@@ -122,10 +122,10 @@ export class RegisterWorkoutComponent {
     const fecha = formData.fechaPropuesta;
     const timestampFecha = fecha ? Math.floor(new Date(fecha).getTime() / 1000) : Date.now();
     return {
-      "Ejercicios": [...this.exercisesArray],
-      "Entrenador": this.trainerUid,
-      "Fecha": timestampFecha,
-      "Tiempo": formData.duracionPropuesta || 0
+      "ejercicios": [...this.exercisesArray],
+      "entrenador": this.trainerUid,
+      "fecha": timestampFecha,
+      "tiempo": formData.duracionPropuesta || 0
     };
   }
 

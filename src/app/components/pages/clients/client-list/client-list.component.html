@@ -22,15 +22,15 @@
     
                 <fieldset *ngFor="let workout of client.Workouts?.Pendientes" class="client-list-workout">
                     <legend class="client-list-workout-top">
-                        <p class="workout-date">{{ workout.Fecha * 1000 | date:'dd/MM/yyyy - HH:mm' }}</p>
+                        <p class="workout-date">{{ workout.fecha * 1000 | date:'dd/MM/yyyy - HH:mm' }}</p>
                         <p class="separator"> - </p>
-                        <p class="workout-time">{{ workout.Tiempo }} mins</p>
+                        <p class="workout-time">{{ workout.tiempo }} mins</p>
                     </legend>
     
                     <div *ngFor="let ejercicio of workout.Ejercicios" class="client-list-ejercicios">
-                        <p class="nombre-ejercicio">{{ ejercicio.Nombre }}</p>
+                        <p class="nombre-ejercicio">{{ ejercicio.nombre }}</p>
                         <p class="separator"> - </p>
-                        <p>{{ ejercicio.Series }} x {{ ejercicio.Reps }}</p>
+                        <p>{{ ejercicio.series }} x {{ ejercicio.reps }}</p>
                     </div>
                 </fieldset>
     
@@ -62,15 +62,15 @@
     
                 <fieldset *ngFor="let workout of client.Workouts?.Pendientes" class="client-list-workout">
                     <legend class="client-list-workout-top">
-                        <p class="workout-date">{{ workout.Fecha * 1000 | date:'dd/MM/yyyy - HH:mm' }}</p>
+                        <p class="workout-date">{{ workout.fecha * 1000 | date:'dd/MM/yyyy - HH:mm' }}</p>
                         <p class="separator"> - </p>
-                        <p class="workout-time">{{ workout.Tiempo }} mins</p>
+                        <p class="workout-time">{{ workout.tiempo }} mins</p>
                     </legend>
     
                     <div *ngFor="let ejercicio of workout.Ejercicios" class="client-list-ejercicios">
-                        <p class="nombre-ejercicio">{{ ejercicio.Nombre }}</p>
+                        <p class="nombre-ejercicio">{{ ejercicio.nombre }}</p>
                         <p class="separator"> - </p>
-                        <p>{{ ejercicio.Series }} x {{ ejercicio.Reps }}</p>
+                        <p>{{ ejercicio.series }} x {{ ejercicio.reps }}</p>
                     </div>
                 </fieldset>
     
